@@ -1,8 +1,6 @@
 import tkinter as tk
-from tkinter import ttk
-from PIL import Image, ImageTk
-
-from frontend.CredentialsView import CredentialsWindow
+from CredentialsWindow import CredentialsFrame
+from MainWindow import MainFrame
 
 def main():
     app = MainApplication()
@@ -13,33 +11,36 @@ class MainApplication(tk.Tk):
         super().__init__()
         self.title("ProjectBB")
         self.maxsize(1920, 1080)
-        self.geometry("1920x1080")
-        self.configure(background="#efefef")
+        self.geometry("1444x900")
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=1)
 
-        frame = MainFrame(self)
-        frame.place(relx = 0.5, rely = 0.4, anchor = "center")
+        self.frames = {}
 
-class MainFrame(ttk.Frame):
-    def __init__(self, master):
-        super().__init__(master)
+        for F in (MainFrame, CredentialsFrame):
+            frame = F(self)
+            self.frames[F.__name__] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
 
-        self.logo = Image.open("lcecg.png")
-        self.logo = ImageTk.PhotoImage(self.logo)
+        self.login = False
 
-        self.logoLabel = ttk.Label(self, image=self.logo)
-        self.logoLabel.grid(column = 0, row = 0, sticky = "nsew", padx = 10, pady = 10, columnspan=2)
+        self.show_frame("MainFrame")
 
-        self.MainLabel = ttk.Label(self, text="Project BB")
-        self.MainLabel.grid(column=0, row=1, columnspan = 2, padx=10, pady=10)
+    def show_frame(self, page):
+        frame = self.frames[page]
+        frame.tkraise()
 
-        self.WelcomeLabel = ttk.Label(self, text="Welcome")
-        self.WelcomeLabel.grid(column=0, row=2, columnspan = 2, padx=10, pady=10)
+    def get_login(self):
+        return self.login
 
-        self.SignupButton = ttk.Button(self, text="Sign Up")
-        self.SignupButton.grid(column=0, row=3, sticky="ew", padx=10, pady=10)
+    def set_login(self, login):
+        self.login = login
 
-        self.LoginButton = ttk.Button(self, text="Login")
-        self.LoginButton.grid(column=1, row=3, sticky="ew", padx=10, pady=10)
+    def get_mainStyle(self):
+        return self.mainStyle
+
+    def get_subStyle(self):
+        return self.subStyle
 
 if __name__ == '__main__':
     main()

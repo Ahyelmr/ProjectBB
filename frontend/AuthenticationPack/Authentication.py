@@ -1,7 +1,7 @@
 import os
 
 def register_user(user_name, user_pass):
-    if os.path.exists("users.txt"):
+    if os.path.exists("Information/users.txt"):
         with open("users.txt", "r") as file:
             user_data = file.readlines()
             for entry in user_data:
@@ -10,7 +10,7 @@ def register_user(user_name, user_pass):
                     print("Username already exists. Please choose another.")
                     return
 
-    with open("users.txt", "a") as file:
+    with open("Information/users.txt", "a") as file:
         file.write(f"{user_name}:{user_pass}\n")
     print("Registration successful!")
 
@@ -28,6 +28,7 @@ def user_login(user_name, user_pass):
                 return
     print("Invalid username or password.")
 
+"""
 def dashboard():
     while True:
         print("\n1. Register\n2. Login\n3. Exit")
@@ -48,3 +49,5 @@ def dashboard():
 
 if __name__ == "__main__":
     dashboard()
+
+"""
