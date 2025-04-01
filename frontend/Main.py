@@ -1,50 +1,52 @@
 import tkinter as tk
 from tkinter import ttk
 
-root = tk.Tk()
-root.title("ProjectBB")
-root.maxsize(1920, 1080)
-root.geometry('1200x720')
+def main():
+    app = Application()
+    app.mainloop()
 
-def add_to_list(event=None):
-    text = entry.get()
-    if text:
-        text_list.insert(tk.END, text)
-        entry.delete(0, tk.END)
+class Application(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Simple App")
+        self.maxsize(1920, 1080)
+        self.geometry("1200x720")
 
-root.columnconfigure(0, weight=1)
-root.rowconfigure(0, weight=1)
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=3)
+        self.rowconfigure(0, weight=1)
 
-frame = ttk.Frame(root)
-frame.grid(row = 0, column = 0, sticky="nsew", padx=5, pady=5)
+        frame1 = InputForm(self)
+        frame1.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
 
-frame.columnconfigure(0, weight=1)
-frame.rowconfigure(1, weight=1)
-
-entry = ttk.Entry(frame)
-entry.grid(row = 0, column = 0, sticky="ew")
-
-entry.bind("<Return>", add_to_list)
-
-entry_button = ttk.Button(frame, text = 'Add', command=add_to_list)
-entry_button.grid(row = 0, column = 1)
-
-text_list = tk.Listbox(frame)
-text_list.grid(row = 1, column = 0, columnspan = 2, sticky="nsew")
+        frame2 = InputForm(self)
+        frame2.grid(row=0, column=1, sticky="nsew", padx=5, pady=5)
 
 
 
-"""
-def on_click():
-   label.config(text="Bubber")
+class InputForm(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.columnconfigure(0, weight=1)
+        self.rowconfigure(1, weight=1)
 
-label = tk.Label(root, text="Bubbey")
-label.grid(row = 0, column = 0)
+        self.entry = ttk.Entry(self)
+        self.entry.grid(row=0, column=0, sticky="ew")
 
-button1 = tk.Button(root, text="Click me", command = on_click)
-button1.grid(row = 0, column = 1)
+        self.entry.bind("<Return>", self.add_to_list)
 
-print(button1.config().keys())
-"""
+        self.entry_button = ttk.Button(self, text='Add', command=self.add_to_list)
+        self.entry_button.grid(row=0, column=1)
 
-root.mainloop()
+        self.text_list = tk.Listbox(self)
+        self.text_list.grid(row=1, column=0, columnspan=2, sticky="nsew")
+
+    def add_to_list(self, event=None):
+        text = self.entry.get()
+        if text:
+            self.text_list.insert(tk.END, text)
+            self.entry.delete(0, tk.END)
+
+
+if __name__ == "__main__":
+    main()
