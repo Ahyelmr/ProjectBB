@@ -17,7 +17,7 @@ class MainApplication(tk.Tk):
         self.configure(background="#efefef")
 
         frame = MainFrame(self)
-        frame.place(relx = 0.5, rely = 0.3, anchor = "center")
+        frame.place(relx = 0.5, rely = 0.4, anchor = "center")
 
 class MainFrame(ttk.Frame):
     def __init__(self, master):
@@ -27,13 +27,19 @@ class MainFrame(ttk.Frame):
         self.logo = ImageTk.PhotoImage(self.logo)
 
         self.logoLabel = ttk.Label(self, image=self.logo)
-        self.logoLabel.grid(column = 0, row = 0, sticky = "nsew", padx = 10, pady = 10)
+        self.logoLabel.grid(column = 0, row = 0, sticky = "nsew", padx = 10, pady = 10, columnspan=2)
 
         self.MainLabel = ttk.Label(self, text="Project BB")
-        self.MainLabel.grid(column=0, row=1, sticky="ew", padx=10, pady=10)
+        self.MainLabel.grid(column=0, row=1, columnspan = 2, padx=10, pady=10)
 
         self.WelcomeLabel = ttk.Label(self, text="Welcome")
-        self.WelcomeLabel.grid(column=0, row=2, sticky="ew", padx=10, pady=10)
+        self.WelcomeLabel.grid(column=0, row=2, columnspan = 2, padx=10, pady=10)
+
+        self.SignupButton = ttk.Button(self, text="Sign Up")
+        self.SignupButton.grid(column=0, row=3, sticky="ew", padx=10, pady=10)
+
+        self.LoginButton = ttk.Button(self, text="Login")
+        self.LoginButton.grid(column=1, row=3, sticky="ew", padx=10, pady=10)
 
 if __name__ == '__main__':
     main()
