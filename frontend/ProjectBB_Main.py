@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
-from frontend.CredentialsView import CredentialsWindow
+from CredentialsFrame import CredentialsFrame
 
 def main():
     app = MainApplication()
@@ -13,33 +13,65 @@ class MainApplication(tk.Tk):
         super().__init__()
         self.title("ProjectBB")
         self.maxsize(1920, 1080)
-        self.geometry("1920x1080")
-        self.configure(background="#efefef")
+        self.geometry("1444x900")
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=1)
 
-        frame = MainFrame(self)
-        frame.place(relx = 0.5, rely = 0.4, anchor = "center")
+        self.login = False
+
+        self.frames = {}
+
+        for F in (MainFrame, CredentialsFrame):
+            frame = F(self)
+            self.frames[F] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
+
+        self.show_frame(MainFrame)
+
+    def show_frame(self, page):
+        frame = self.frames[page]
+        frame.tkraise()
+
+    def get_login(self):
+        return self.login
+
+    def set_login(self, login):
+        self.login = login
+
+
 
 class MainFrame(ttk.Frame):
     def __init__(self, master):
         super().__init__(master)
 
+        self.master = master
+
         self.logo = Image.open("lcecg.png")
         self.logo = ImageTk.PhotoImage(self.logo)
 
         self.logoLabel = ttk.Label(self, image=self.logo)
-        self.logoLabel.grid(column = 0, row = 0, sticky = "nsew", padx = 10, pady = 10, columnspan=2)
+        self.logoLabel.pack(padx = 10, pady = 10)
 
         self.MainLabel = ttk.Label(self, text="Project BB")
-        self.MainLabel.grid(column=0, row=1, columnspan = 2, padx=10, pady=10)
+        self.MainLabel.pack(padx = 10, pady = 10)
 
         self.WelcomeLabel = ttk.Label(self, text="Welcome")
-        self.WelcomeLabel.grid(column=0, row=2, columnspan = 2, padx=10, pady=10)
+        self.WelcomeLabel.pack(padx = 10, pady = 10)
 
-        self.SignupButton = ttk.Button(self, text="Sign Up")
-        self.SignupButton.grid(column=0, row=3, sticky="ew", padx=10, pady=10)
+        self.SignupButton = ttk.Button(self, text="Sign Up", command=self.on_signup_click)
+        self.SignupButton.pack(padx = 10, pady = 10)
 
-        self.LoginButton = ttk.Button(self, text="Login")
-        self.LoginButton.grid(column=1, row=3, sticky="ew", padx=10, pady=10)
+        self.LoginButton = ttk.Button(self, text="Login", command=self.on_login_click)
+        self.LoginButton.pack(padx = 10, pady = 10)
+
+    def on_signup_click(self, event=None):
+        self.master.show_frame(CredentialsFrame)
+        self.master.set_login(False)
+
+    def on_login_click(self, event=None):
+        self.master.show_frame(CredentialsFrame)
+        self.master.set_login(True)
+
 
 if __name__ == '__main__':
     main()
