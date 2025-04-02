@@ -5,6 +5,8 @@ class CredentialsFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
+        self.parent = parent
+
         self.credentialsLabel = tk.Label(self)
         self.credentialsLabel.pack(side="top", expand=True)
 
