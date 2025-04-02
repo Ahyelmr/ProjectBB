@@ -1,21 +1,21 @@
-from tkinter import ttk
-from frontend.AuthenticationPack.Authentication import *
+import tkinter as tk
+from backend.AuthenticationPack.Authentication import *
 
-class CredentialsFrame(ttk.Frame):
+class CredentialsFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
         self.parent = parent
 
-        self.credentialsLabel = ttk.Label(self, text="Credentials")
+        self.credentialsLabel = tk.Label(self, text="Credentials")
 
-        self.usernameEntry = ttk.Entry(self)
+        self.usernameEntry = tk.Entry(self)
         self.usernameEntry.pack(expand = True)
 
-        self.passwordEntry = ttk.Entry(self)
+        self.passwordEntry = tk.Entry(self)
         self.passwordEntry.pack(expand = True)
 
-        self.enterButton = ttk.Button(self, text="Enter", command=self.on_button_clicked)
+        self.enterButton = tk.Button(self, text="Enter", command=self.on_button_clicked)
         self.enterButton.pack(expand = True)
 
     def on_button_clicked(self, event=None):
