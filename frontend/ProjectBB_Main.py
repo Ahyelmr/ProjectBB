@@ -3,7 +3,6 @@ from CredentialsWindow import CredentialsFrame
 from MainWindow import MainFrame
 from KitchenView import KitchenFrame
 
-
 def main():
     app = MainApplication()
     app.mainloop()
