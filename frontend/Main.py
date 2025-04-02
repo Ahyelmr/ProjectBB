@@ -17,7 +17,7 @@ class Application(tk.Tk):
         self.rowconfigure(0, weight=1)
 
         frame1 = InputForm(self)
-        frame1.place(row=0, column=0, sticky="nsew", padx=5, pady=5)
+        frame1.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
 
         frame2 = InputForm(self)
         frame2.grid(row=0, column=1, sticky="nsew", padx=5, pady=5)

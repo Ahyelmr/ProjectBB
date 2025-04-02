@@ -10,6 +10,7 @@ class MainFrame(tk.Frame):
 
         self.logo = Image.open("Assets/lcecg.png")
         self.logo = ImageTk.PhotoImage(self.logo)
+        self.configure(bg="yellow")
 
         self.logoLabel = tk.Label(self, image=self.logo)
         self.logoLabel.pack(padx = 10, pady = 10)
@@ -29,6 +30,7 @@ class MainFrame(tk.Frame):
     def on_signup_click(self, event=None):
         self.parent.show_frame("CredentialsFrame")
         self.parent.set_login(False)
+
 
     def on_login_click(self, event=None):
         self.parent.show_frame("CredentialsFrame")

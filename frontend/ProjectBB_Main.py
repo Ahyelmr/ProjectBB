@@ -1,7 +1,9 @@
 import tkinter as tk
+from multiprocessing.process import parent_process
+
 from CredentialsWindow import CredentialsFrame
 from MainWindow import MainFrame
-from KitchenView import KitchenFrame
+from KitchenView import MainKitchenFrame
 
 def main():
     app = MainApplication()
@@ -10,6 +12,7 @@ def main():
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
+
         self.title("ProjectBB")
         self.maxsize(1920, 1080)
         self.geometry("1444x900")
@@ -18,7 +21,7 @@ class MainApplication(tk.Tk):
 
         self.frames = {}
 
-        for F in (MainFrame, CredentialsFrame, KitchenFrame):
+        for F in (MainFrame, CredentialsFrame, MainKitchenFrame):
             frame = F(self)
             self.frames[F.__name__] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -36,12 +39,6 @@ class MainApplication(tk.Tk):
 
     def set_login(self, login):
         self.login = login
-
-    def get_mainStyle(self):
-        return self.mainStyle
-
-    def get_subStyle(self):
-        return self.subStyle
 
 if __name__ == '__main__':
     main()

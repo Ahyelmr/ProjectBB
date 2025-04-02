@@ -5,9 +5,8 @@ class CredentialsFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self.parent = parent
-
-        self.credentialsLabel = tk.Label(self, text="Credentials")
+        self.credentialsLabel = tk.Label(self)
+        self.credentialsLabel.pack(side="top", expand=True)
 
         self.usernameEntry = tk.Entry(self)
         self.usernameEntry.pack(expand = True)
@@ -15,10 +14,13 @@ class CredentialsFrame(tk.Frame):
         self.passwordEntry = tk.Entry(self)
         self.passwordEntry.pack(expand = True)
 
-        self.enterButton = tk.Button(self, text="Enter", command=self.on_button_clicked)
+        self.enterButton = tk.Button(self, text="Enter", command=self.on_enter_button_clicked)
         self.enterButton.pack(expand = True)
 
-    def on_button_clicked(self, event=None):
+        self.returnButton = tk.Button(self, text="Return", command=self.on_return_button_clicked)
+        self.returnButton.pack(side=tk.LEFT, anchor="s")
+
+    def on_enter_button_clicked(self, event=None):
         print(self.parent.get_login())
         username = self.usernameEntry.get()
         password = self.passwordEntry.get()
@@ -32,3 +34,13 @@ class CredentialsFrame(tk.Frame):
 
         if username == "123" and password == "456":
             print("You are logged in")
+
+    def on_return_button_clicked(self, event=None):
+        self.parent.show_frame("MainFrame")
+
+    def set_credentials_label(self):
+        credentials = self.parent.get_login()
+        if credentials:
+            self.credentialsLabel.configure(text="Log In", font=("Arial", 20), foreground="black")
+        else:
+            self.credentialsLabel.configure(text="Register New Account", font=("Arial", 20), foreground="black")
