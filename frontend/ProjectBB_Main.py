@@ -1,6 +1,8 @@
 import tkinter as tk
 from CredentialsWindow import CredentialsFrame
 from MainWindow import MainFrame
+from KitchenView import KitchenFrame
+
 
 def main():
     app = MainApplication()
@@ -17,7 +19,7 @@ class MainApplication(tk.Tk):
 
         self.frames = {}
 
-        for F in (MainFrame, CredentialsFrame):
+        for F in (MainFrame, CredentialsFrame, KitchenFrame):
             frame = F(self)
             self.frames[F.__name__] = frame
             frame.grid(row=0, column=0, sticky="nsew")
