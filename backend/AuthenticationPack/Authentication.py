@@ -2,7 +2,7 @@ import os
 
 def register_user(user_name, user_pass):
     if os.path.exists("Information/users.txt"):
-        with open("users.txt", "r") as file:
+        with open("Information/users.txt", "r") as file:
             user_data = file.readlines()
             for entry in user_data:
                 stored_user, _ = entry.strip().split(":")
@@ -16,11 +16,11 @@ def register_user(user_name, user_pass):
     return True
 
 def user_login(user_name, user_pass):
-    if not os.path.exists("users.txt"):
+    if not os.path.exists("Information/users.txt"):
         print("No registered users found. Please register first.")
         return False
 
-    with open("users.txt", "r") as file:
+    with open("Information/users.txt", "r") as file:
         user_data = file.readlines()
         for entry in user_data:
             stored_user, stored_pass = entry.strip().split(":")
