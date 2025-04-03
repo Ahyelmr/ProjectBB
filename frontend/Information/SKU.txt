@@ -1,45 +1,45 @@
-Cheesy Nachos, CN89, 89, Cheesy Nachos.png
-Nachos Overload, NO99, 99, Nachos Overload.png
-Mojo Potato, MP79, 79, Mojo Potato.png
-Embutido & Egg, EE99, 99, Embutido & Egg.png
-Spam & Egg, SE99, 99, Spam & Egg.png
-Sausage & Beans, SB119, 119, Sausage & Beans.png
-Stuff Breadsticks, SBS99, 99, Stuff Breadsticks.png
-Shawarma Beef, SHB99, 99, Shawarma Beef.png
-Shawarma Chicken, SHC89, 89, Shawarma Chicken.png
-Chicken Quesadilla, CQ89, 89, Chicken Quesadilla.png
-Beef Quesadilla, BQ99, 99, Beef Quesadilla.png
-Tori Katsu Sandwich, TKS99, 99, Tori Katsu Sandwich.png
-Hotdog Sandwich Plain, HSP79, 79, Hotdog Sandwich Plain.png
-Hotdog Sandwich Overload, HSO89, 89, Hotdog Sandwich Overload.png
-Hungarian Sausage Sandwich, HSS99, 99, Hungarian Sausage Sandwich.png
-Korean Corn Dog, KCD90, 90, Korean Corn Dog.png
-Korean Bibimbap, KB119, 119, Korean Bibimbap.png
-Beef Yakiniku, BY139, 139, Beef Yakiniku.png
-Chicken Shawarma Rice, CSR119, 119, Chicken Shawarma Rice.png
-Beef Shawarma Rice, BSR129, 129, Beef Shawarma Rice.png
-Pork Tonkatsu, PT139, 139, Pork Tonkatsu.png
-Ebi Tempura, ET139, 139, Ebi Tempura.png
-Chicken Pastil, CP129, 129, Chicken Pastil.png
-Pork Adobo, PA139, 139, Pork Adobo.png
-Chicken Adobo, CA129, 129, Chicken Adobo.png
-Beef Steak, BS139, 139, Beef Steak.png
-Pork Steak, PS139, 139, Pork Steak.png
-Sisig, SG139, 139, Sisig.png
-Spicy Liempo, SL139, 139, Spicy Liempo.png
-Bangus, BA129, 129, Bangus.png
-Unli Rice, UR00, 0, Unli Rice.png
-Utensils, UT00, 0, Utensils.png
-Free Drink, FD00, 0, Free Drink.png
-Free Ice Cream, FI00, 0, Free IceCream.png
-Crunchy Honey Garlic, CW01, 119, Crunchy Honey Garlic.png
-Mango Habanero, CW02, 139, Mango Habanero.png
-Buffalo, CW03, 129, Buffalo.png
-Garlic Parmesan, CW04, 129, Garlic Parmesan.png
-Honey Sriracha, CW05, 129, Honey Sriracha.png
-Dragon Fire, CW06, 129, Dragon Fire.png
-Salted Egg, CW07, 139, Salted Egg.png
-Yangnyeom Style, CW08, 139, Yangnyeom Style.png
-Orange Panda, CW09, 129, Orange Panda.png
-Snow Cheese, CW10, 139, Snow Cheese.png
-Flamin’ Cheetos, CW11, 139, Flamin’ Cheetos.png
+Cheesy Nachos,CN89,89,Cheesy Nachos.png
+Nachos Overload,NO99,99,Nachos Overload.png
+Mojo Potato,MP79,79,Mojo Potato.png
+Embutido & Egg,EE99,99,Embutido & Egg.png
+Spam & Egg,SE99,99,Spam & Egg.png
+Sausage & Beans,SB119,119,Sausage & Beans.png
+Stuff Breadsticks,SBS99,99,Stuff Breadsticks.png
+Shawarma Beef,SHB99,99,Shawarma Beef.png
+Shawarma Chicken,SHC89,89,Shawarma Chicken.png
+Chicken Quesadilla,CQ89,89,Chicken Quesadilla.png
+Beef Quesadilla,BQ99,99,Beef Quesadilla.png
+Tori Katsu Sandwich,TKS99,99,Tori Katsu Sandwich.png
+Hotdog Sandwich Plain,HSP79,79,Hotdog Sandwich Plain.png
+Hotdog Sandwich Overload,HSO89,89,Hotdog Sandwich Overload.png
+Hungarian Sausage Sandwich,HSS99,99,Hungarian Sausage Sandwich.png
+Korean Corn Dog,KCD90,90,Korean Corn Dog.png
+Korean Bibimbap,KB119,119,Korean Bibimbap.png
+Beef Yakiniku,BY139,139,Beef Yakiniku.png
+Chicken Shawarma Rice,CSR119,119,Chicken Shawarma Rice.png
+Beef Shawarma Rice,BSR129,129,Beef Shawarma Rice.png
+Pork Tonkatsu,PT139,139,Pork Tonkatsu.png
+Ebi Tempura,ET139,139,Ebi Tempura.png
+Chicken Pastil,CP129,129,Chicken Pastil.png
+Pork Adobo,PA139,139,Pork Adobo.png
+Chicken Adobo,CA129,129,Chicken Adobo.png
+Beef Steak,BS139,139,Beef Steak.png
+Pork Steak,PS139,139,Pork Steak.png
+Sisig,SG139,139,Sisig.png
+Spicy Liempo,SL139,139,Spicy Liempo.png
+Bangus,BA129,129,Bangus.png
+Unli Rice,UR00,0,Unli Rice.png
+Utensils,UT00,0,Utensils.png
+Free Drink,FD00,0,Free Drink.png
+Free Ice Cream,FI00,0,Free IceCream.png
+Crunchy Honey Garlic,CW01,119,Crunchy Honey Garlic.png
+Mango Habanero,CW02,139,Mango Habanero.png
+Buffalo,CW03,129,Buffalo.png
+Garlic Parmesan,CW04,129,Garlic Parmesan.png
+Honey Sriracha,CW05,129,Honey Sriracha.png
+Dragon Fire,CW06,129,Dragon Fire.png
+Salted Egg,CW07,139,Salted Egg.png
+Yangnyeom Style,CW08,139,Yangnyeom Style.png
+Orange Panda,CW09,129,Orange Panda.png
+Snow Cheese,CW10,139,Snow Cheese.png
+Flamin’ Cheetos,CW11,139,Flamin’ Cheetos.png
