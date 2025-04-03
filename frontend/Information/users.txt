@@ -1,3 +1,2 @@
-sda:sda
-rojan:roj
-dood:dood
+cubs:domingo
+Rojan:Horse

@@ -1,5 +1,6 @@
-class Inventory:
+class Sku:
     def __init__(self):
+        super().__init__()
         self.inventory = {}
 
     def add_item(self, item):

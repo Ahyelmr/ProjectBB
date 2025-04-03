@@ -7,8 +7,9 @@ class MainFrame(tk.Frame):
 
         self.parent = parent
 
-        self.logo = Image.open("Assets/lcecg.png")
-        self.logo = ImageTk.PhotoImage(self.logo)
+        self.logo = Image.open("Assets/BigBoyzLogo.png")
+        self.logo = ImageTk.PhotoImage(self.logo.resize((400, 400)))
+
         self.configure(bg="yellow")
 
         self.logoLabel = tk.Label(self, image=self.logo)

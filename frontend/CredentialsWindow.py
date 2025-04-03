@@ -1,5 +1,5 @@
 import tkinter as tk
-from backend.AuthenticationPack.Authentication import *
+from backend.Authentication import *
 
 class CredentialsFrame(tk.Frame):
     def __init__(self, parent):
@@ -39,15 +39,20 @@ class CredentialsFrame(tk.Frame):
         if login:
             if user_login(username, password):
                 self.set_verify_label("You have logged in successfully!")
-                self.open_confirmation_window()
-                self.after(100, self.parent.get_login("MainKitchenFrame"))
+                self.open_confirmation_window("Successfully Logged In!")
+                self.after(100, self.parent.show_frame("MainKitchenFrame"))
 
             else:
                 self.set_verify_label("Invalid username or password!")
 
         else:
-            register_user(username, password)
-            self.parent.show_frame("MainKitchenFrame")
+            if register_user(username, password):
+                self.set_verify_label("You have registered successfully!")
+                self.open_confirmation_window("Successfully Registered!")
+                self.after(100, self.parent.show_frame("MainFrame"))
+            else:
+                self.set_verify_label("User has already been registered!")
+
 
         if username == "123" and password == "456":
             print("You are logged in")
@@ -66,13 +71,13 @@ class CredentialsFrame(tk.Frame):
     def set_verify_label(self, label):
         self.verifyLabel.configure(text=label)
 
-    def open_confirmation_window(self):
+    def open_confirmation_window(self, label):
         confirm_box = tk.Toplevel()
         confirm_box.title("Log In")
         confirm_box.resizable(False, False)
-        confirm_box.geometry("200x200")
+        confirm_box.geometry("200x150")
 
-        confirm_login = tk.Label(confirm_box, text="Successfully Logged in!")
+        confirm_login = tk.Label(confirm_box, text=label)
         confirm_login.pack(expand=True)
 
         confirm_button = tk.Button(confirm_box, text="Confirm", command=confirm_box.destroy)

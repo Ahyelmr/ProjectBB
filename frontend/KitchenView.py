@@ -20,10 +20,16 @@ class KitchenFrame(tk.Frame):
 
         self.parent = parent
 
+        self.text_box = tk.Label(self, text = "Kitchen")
+        self.text_box.grid(row = 0, column = 0, sticky = "nsew")
+
 
 class OptionsFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
         self.parent = parent
+
+        self.text_box = tk.Label(self, text="Kitchen")
+        self.text_box.grid(row=0, column=0, sticky="nsew")
 

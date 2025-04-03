@@ -1,7 +1,7 @@
 class Item:
-    def __init__(self, name, category, price, image):
+    def __init__(self, name, sku, price, image):
         self.name = name
-        self.category = category
+        self.sku = sku
         self.price = price
         self.image = image + ".png"
 
@@ -9,7 +9,7 @@ class Item:
         return self.name
 
     def get_category(self):
-        return self.category
+        return self.sku
 
     def get_price(self):
         return self.price
@@ -20,8 +20,8 @@ class Item:
     def set_name(self, name):
         self.name = name
 
-    def set_category(self, category):
-        self.category = category
+    def set_sku(self, sku):
+        self.sku = sku
 
     def set_price(self, price):
         self.price = price

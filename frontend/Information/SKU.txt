@@ -28,10 +28,10 @@ Pork Steak, PS139, 139, Pork Steak.png
 Sisig, SG139, 139, Sisig.png
 Spicy Liempo, SL139, 139, Spicy Liempo.png
 Bangus, BA129, 129, Bangus.png
-Unli Rice, UR00, 00, Unli Rice.png
-Utensils, UT00, 00, Utensils.png
-Free Drink, FD00, 00, Free Drink.png
-Free Ice Cream, FI00, 00, Free IceCream.png
+Unli Rice, UR00, 0, Unli Rice.png
+Utensils, UT00, 0, Utensils.png
+Free Drink, FD00, 0, Free Drink.png
+Free Ice Cream, FI00, 0, Free IceCream.png
 Crunchy Honey Garlic, CW01, 119, Crunchy Honey Garlic.png
 Mango Habanero, CW02, 139, Mango Habanero.png
 Buffalo, CW03, 129, Buffalo.png
