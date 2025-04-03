@@ -17,7 +17,6 @@ class KitchenFrame(tk.Frame):
         self.parent = parent
 
 
-
 class OptionsFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
