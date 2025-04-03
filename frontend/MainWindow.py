@@ -21,7 +21,7 @@ class MainFrame(tk.Frame):
         self.WelcomeLabel.pack(padx = 10, pady = 10)
 
         self.SignupButton = tk.Button(self,text="Sign Up",  command=self.on_signup_click)
-        self.SignupButton.pack(side = tk.LEFT, fill = tk.X, expand = True, padx = 10, pady = 10)
+        self.SignupButton.pack(side = tk.LEFT, expand = True, padx = 10, pady = 10)
 
         self.LoginButton = tk.Button(self, text="Login", command=self.on_login_click)
         self.LoginButton.pack(side = tk.LEFT, expand = True, padx = 10, pady = 10)

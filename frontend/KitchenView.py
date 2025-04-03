@@ -7,6 +7,10 @@ class MainKitchenFrame(tk.Frame):
 
         self.kitchen_frame = KitchenFrame(self)
         self.options_frame = OptionsFrame(self)
+        self.kitchen_frame.grid(row = 0, column = 0, sticky = "nsew")
+        self.options_frame.grid(row = 0, column = 1, sticky = "nsew")
+        self.options_frame.rowconfigure(0, weight = 1)
+        self.options_frame.columnconfigure(0, weight = 1)
 
 
 
