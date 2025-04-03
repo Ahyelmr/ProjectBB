@@ -5,6 +5,7 @@ class CredentialsFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
+
         self.parent = parent
 
         self.credentialsLabel = tk.Label(self)
@@ -28,7 +29,8 @@ class CredentialsFrame(tk.Frame):
         password = self.passwordEntry.get()
         credentials = self.parent.get_login()
         if credentials:
-            user_login(username, password)
+            if user_login(username, password):
+                self.parent.show_frame("MainFrame")
 
         else:
             register_user(username, password)
@@ -42,6 +44,7 @@ class CredentialsFrame(tk.Frame):
 
     def set_credentials_label(self):
         credentials = self.parent.get_login()
+        print(f"Inside set_credentials_label, login state: {credentials}")
         if credentials:
             self.credentialsLabel.configure(text="Log In", font=("Arial", 20), foreground="black")
         else:

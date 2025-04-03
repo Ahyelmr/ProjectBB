@@ -25,7 +25,7 @@ def user_login(user_name, user_pass):
             stored_user, stored_pass = entry.strip().split(":")
             if stored_user == user_name and stored_pass == user_pass:
                 print("Login successful!")
-                return
+                return True
     print("Invalid username or password.")
 
 """

@@ -1,6 +1,4 @@
 import tkinter as tk
-from multiprocessing.process import parent_process
-
 from CredentialsWindow import CredentialsFrame
 from MainWindow import MainFrame
 from KitchenView import MainKitchenFrame
@@ -24,15 +22,20 @@ class MainApplication(tk.Tk):
         for F in (MainFrame, CredentialsFrame, MainKitchenFrame):
             frame = F(self)
             self.frames[F.__name__] = frame
-            frame.grid(row=0, column=0, sticky="nsew")
 
-        self.login = False
+
+        self.login = None
 
         self.show_frame("MainFrame")
 
     def show_frame(self, page):
         frame = self.frames[page]
-        frame.tkraise()
+        if frame:
+            frame.grid(row=0, column=0, sticky="nsew")
+            frame.tkraise()
+
+        if page == "CredentialsFrame":
+            frame.set_credentials_label()
 
     def get_login(self):
         return self.login
