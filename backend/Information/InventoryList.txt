@@ -1,0 +1,52 @@
+Chicken Wings, ChickenWings.png
+Beef, Beef.png
+Tonkatsu, Tonkatsu.png
+Tempura, Tempura.png
+Chicken Inasal Leg Qtr, Chicken Inasal LegQtr.png
+Chicken Pastil, Chicken Pastil.png
+Liempo, Liempo.png
+Bangus, Bangus.png
+Pork Adobo, Pork Adobo.png
+Nacho Chips, Nacho Chips.png
+Mojo Potato, Mojo Potato.png
+Chicken Fingers, Chicken Fingers.png
+Burger Bun, Burger Bun.png
+Hotdog Bun, Hotdog Bun.png
+Pita Bread, Pita Bread.png
+Bread Sticks, Bread Sticks.png
+Torikatsu, Torikatsu.png
+Hotdog King Size, Hotdog King Size.png
+Hungarian Sausage, Hungarian Sausage.png
+Corn Dog (CK), Corn Dog (CK).png
+Corn Dog (CM), Corn Dog (CM).png
+Egg, Egg.png
+Parmesan Cheese Seasoning, Parmesan Cheese Seasoning.png
+Potato, Potato.png
+Spam, Spam.png
+Mozzarella Cheese, Mozzarella Cheese.png
+Honey Garlic Seasoning, Honey Garlic Seasoning.png
+Mango Habanero Seasoning, Mango Habanero Seasoning.png
+Buffalo Seasoning, Buffalo Seasoning.png
+Honey Sriracha Seasoning, Honey Sriracha Seasoning.png
+Dragon Fire Seasoning, Dragon Fire Seasoning.png
+Salted Egg Seasoning, Salted Egg Seasoning.png
+Yangnyeom Style Seasoning, Yangnyeom Style Seasoning.png
+Orange Panda Seasoning, Orange Panda Seasoning.png
+Snow Cheese Seasoning, Snow Cheese Seasoning.png
+Flamin' Cheetos Seasoning, Flamin' Cheetos Seasoning.png
+Beef Yakiniku, Beef Yakiniku.png
+Beef Misono, Beef Misono.png
+Rice, Rice.png
+Tomato, Tomato.png
+Cucumber, Cucumber.png
+Onion, Onion.png
+Take Out Box (LB), Take Out Box (LB).png
+Take Out Box (SB), Take Out Box (SB).png
+Paper Plate, Paper Plate.png
+Spoon, Spoon.png
+Fork, Fork.png
+Brown Bag, Brown Bag.png
+Quesadilla Plate, Quesadilla Plate.png
+Burger Plate, Burger Plate.png
+Shawarma Wrap, Shawarma Wrap.png
+Gloves, Gloves.png

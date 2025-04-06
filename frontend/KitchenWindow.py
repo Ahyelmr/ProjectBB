@@ -1,0 +1,79 @@
+import tkinter as tk
+import customtkinter as ctk
+from PIL import Image, ImageTk
+from backend.Item import SkuItem
+
+class MainKitchenFrame(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.parent = parent
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=3)
+        self.grid_columnconfigure(1, weight=1)
+        self.kitchen_frame = KitchenFrame(self)
+        self.options_frame = OptionsFrame(self)
+        self.kitchen_frame.grid(row = 0, column = 0, sticky = "nsew")
+        self.options_frame.grid(row = 0, column = 1, sticky = "nsew")
+
+
+
+class KitchenFrame(ctk.CTkScrollableFrame):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+        self.parent = parent
+
+        size = self.parent.parent.get_sku_inventory().get_size()
+        print(size)
+        l = 5
+        k = 0
+
+        for i in range(5):
+            for j in range(5):
+                if i+j < size:
+                    item = self.parent.parent.get_sku_inventory().getIn_item(k)
+                    item_frame = ItemFrame(self, item)
+                    item_frame.grid(row = i, column = j, sticky = "nsew")
+                    item_frame.grid_rowconfigure(i, weight = 1)
+                    item_frame.grid_columnconfigure(j, weight = 1)
+                    k+=1
+                else:
+                    break
+
+    def return_screen(self, name):
+        self.parent.show_screen(name)
+
+
+class OptionsFrame(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+        self.parent = parent
+
+        self.text_box = ctk.CTkLabel(self, text="Kitchen")
+        self.text_box.pack(side = "top", fill = "x", pady = 10)
+
+        self.return_box = ctk.CTkButton(self, text = "Return", command = self.return_button_click)
+        self.return_box.pack(side = "top", fill = "x", pady = 10)
+
+    def return_button_click(self, event = None):
+        self.parent.parent.show_frame("MainFrame")
+
+
+class ItemFrame(ctk.CTkFrame):
+    def __init__(self, parent, item):
+        super().__init__(parent)
+        self.parent = parent
+
+        self.item_image = Image.open("Assets/SKU-Inv/" + item.get_image())
+        self.item_image_label = ctk.CTkLabel(self, text = " ", image = ctk.CTkImage(self.item_image, size = (200, 200)), width = 200, height = 200)
+        self.item_image_label.grid(row = 0, column = 0, sticky = "nsew")
+
+        self.item_name = ctk.CTkLabel(self, text = item.get_name())
+        self.item_name.grid(row = 1, column = 0, sticky = "nsew")
+
+        self.item_price = ctk.CTkLabel(self, text = item.get_price())
+        self.item_price.grid(row = 2, column = 0, sticky = "nsew")
+
+        self.item_button = ctk.CTkButton(self, text = "Add")
+        self.item_button.grid(row = 3, column = 0, sticky = "nsew")

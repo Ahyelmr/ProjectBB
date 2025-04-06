@@ -1,16 +1,21 @@
 import tkinter as tk
+import customtkinter as ctk
 from CredentialsWindow import CredentialsFrame
 from MainWindow import MainFrame
-from KitchenView import MainKitchenFrame
+from KitchenWindow import MainKitchenFrame
+from backend.LoadItems import *
+from backend.Sku import *
+
 
 def main():
     app = MainApplication()
     app.mainloop()
 
-class MainApplication(tk.Tk):
+class MainApplication(ctk.CTk):
     def __init__(self):
         super().__init__()
 
+        self.sku_inventory = export_items("Information/SKU.txt")
         self.title("ProjectBB")
         self.maxsize(1920, 1080)
         self.geometry("1444x900")
@@ -22,7 +27,6 @@ class MainApplication(tk.Tk):
         for F in (MainFrame, CredentialsFrame, MainKitchenFrame):
             frame = F(self)
             self.frames[F.__name__] = frame
-
 
         self.login = None
 
@@ -42,6 +46,17 @@ class MainApplication(tk.Tk):
 
     def set_login(self, login):
         self.login = login
+
+    def get_sku_inventory(self):
+        return self.sku_inventory
+
+    def set_sku_inventory(self, sku_inventory):
+        self.sku_inventory = sku_inventory
+
+    def print_skus(self):
+        items = self.sku_inventory.get_items()
+        for item in items:
+            print(item.get_name())
 
 if __name__ == '__main__':
     main()
