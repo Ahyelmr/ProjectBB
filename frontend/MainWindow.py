@@ -1,30 +1,31 @@
 from PIL import Image, ImageTk
 import tkinter as tk
+import customtkinter as ctk
 
-class MainFrame(tk.Frame):
+
+class MainFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
 
         self.parent = parent
 
         self.logo = Image.open("Assets/BigBoyzLogo.png")
-        self.logo = ImageTk.PhotoImage(self.logo.resize((400, 400)))
 
-        self.configure(bg="yellow")
+        #self.configure(bg="yellow")
 
-        self.logoLabel = tk.Label(self, image=self.logo)
+        self.logoLabel = ctk.CTkLabel(self, text = " ", image=ctk.CTkImage(self.logo, size = (500, 500)), width = 500, height = 500)
         self.logoLabel.pack(padx = 10, pady = 10)
 
-        self.MainLabel = tk.Label(self, text="Project BB")
+        self.MainLabel = ctk.CTkLabel(self, text="Project BB")
         self.MainLabel.pack(padx = 10, pady = 10)
 
-        self.WelcomeLabel = tk.Label(self, text="Welcome")
+        self.WelcomeLabel = ctk.CTkLabel(self, text="Welcome")
         self.WelcomeLabel.pack(padx = 10, pady = 10)
 
-        self.SignupButton = tk.Button(self,text="Sign Up",  command=self.on_signup_click)
+        self.SignupButton = ctk.CTkButton(self,text="Sign Up", command=self.on_signup_click)
         self.SignupButton.pack(side = tk.LEFT, expand = True, padx = 10, pady = 10)
 
-        self.LoginButton = tk.Button(self, text="Login", command=self.on_login_click)
+        self.LoginButton = ctk.CTkButton(self, text="Login", command=self.on_login_click)
         self.LoginButton.pack(side = tk.LEFT, expand = True, padx = 10, pady = 10)
 
     def on_signup_click(self, event=None):
@@ -32,7 +33,6 @@ class MainFrame(tk.Frame):
         self.parent.set_login(False)  # Set login state for registration
         print(f"Login state after signup: {self.parent.get_login()}")  # Debugging
         self.parent.show_frame("CredentialsFrame")
-
 
 
     def on_login_click(self, event=None):

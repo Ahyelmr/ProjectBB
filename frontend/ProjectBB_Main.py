@@ -1,16 +1,17 @@
 import tkinter as tk
+import customtkinter as ctk
 from CredentialsWindow import CredentialsFrame
 from MainWindow import MainFrame
-from KitchenView import MainKitchenFrame
-from backend.LoadItems import export_items
-from backend import Information
+from KitchenWindow import MainKitchenFrame
+from backend.LoadItems import *
+from backend.Sku import *
 
 
 def main():
     app = MainApplication()
     app.mainloop()
 
-class MainApplication(tk.Tk):
+class MainApplication(ctk.CTk):
     def __init__(self):
         super().__init__()
 

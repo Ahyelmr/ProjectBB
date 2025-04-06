@@ -1,34 +1,35 @@
 import tkinter as tk
+import customtkinter as ctk
 from backend.Authentication import *
 
-class CredentialsFrame(tk.Frame):
+class CredentialsFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
 
         self.parent = parent
 
-        self.credentialsLabel = tk.Label(self)
+        self.credentialsLabel = ctk.CTkLabel(self)
         self.credentialsLabel.pack(side="top", expand=True)
 
-        self.usernameLabel = tk.Label(self, text = "Username")
+        self.usernameLabel = ctk.CTkLabel(self, text = "Username")
         self.usernameLabel.pack(expand=True)
 
-        self.usernameEntry = tk.Entry(self)
+        self.usernameEntry = ctk.CTkEntry(self)
         self.usernameEntry.pack(expand = True)
 
-        self.passwordLabel = tk.Label(self, text="Password")
+        self.passwordLabel = ctk.CTkLabel(self, text="Password")
         self.passwordLabel.pack(expand=True)
 
-        self.passwordEntry = tk.Entry(self, show="*")
+        self.passwordEntry = ctk.CTkEntry(self, show="*")
         self.passwordEntry.pack(expand = True)
 
-        self.enterButton = tk.Button(self, text="Enter", command=self.on_enter_button_clicked,font = ("Helvetica", 20))
+        self.enterButton = ctk.CTkButton(self, text="Enter", command=self.on_enter_button_clicked,font = ("Helvetica", 20))
         self.enterButton.pack(expand = True)
 
-        self.verifyLabel = tk.Label(self)
+        self.verifyLabel = ctk.CTkLabel(self)
         self.verifyLabel.pack(expand=True)
 
-        self.returnButton = tk.Button(self, text="Return", command=self.on_return_button_clicked, font = ("Helvetica", 20))
+        self.returnButton = ctk.CTkButton(self, text="Return", command=self.on_return_button_clicked, font = ("Helvetica", 20))
         self.returnButton.pack(side=tk.LEFT, anchor="s", padx=15, pady=15)
 
     def on_enter_button_clicked(self, event=None):
@@ -64,9 +65,9 @@ class CredentialsFrame(tk.Frame):
         credentials = self.parent.get_login()
         print(f"Inside set_credentials_label, login state: {credentials}")
         if credentials:
-            self.credentialsLabel.configure(text="Log In", font=("Arial", 20), foreground="black")
+            self.credentialsLabel.configure(text="Log In", font=("Arial", 20))
         else:
-            self.credentialsLabel.configure(text="Register New Account", font=("Arial", 20), foreground="black")
+            self.credentialsLabel.configure(text="Register New Account", font=("Arial", 20))
 
     def set_verify_label(self, label):
         self.verifyLabel.configure(text=label)
