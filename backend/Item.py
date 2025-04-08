@@ -1,9 +1,10 @@
 class SkuItem:
-    def __init__(self, name, sku, price, image):
+    def __init__(self, name, sku, price, image, category):
         self.name = name
         self.sku = sku
         self.price = price
         self.image = image
+        self.category = category
 
     def get_name(self):
         return self.name
@@ -13,6 +14,9 @@ class SkuItem:
 
     def get_image(self):
         return self.image
+
+    def get_category(self):
+        return self.category
 
     def set_name(self, name):
         self.name = name
@@ -25,6 +29,9 @@ class SkuItem:
 
     def set_image(self, image):
         self.image = image
+
+    def set_category(self, category):
+        self.category = category
 
 class MenuItem:
     def __init__(self, name, image):
