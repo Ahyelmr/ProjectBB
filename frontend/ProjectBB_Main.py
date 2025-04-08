@@ -20,6 +20,7 @@ class MainApplication(ctk.CTk):
     def __init__(self):
         super().__init__()
 
+        self.order_number = 0
         self.sku_inventory = export_items(FilePathing.resource_path("Information/SKU.txt"))
         self.title("ProjectBB")
         self.maxsize(1920, 1080)
@@ -57,6 +58,12 @@ class MainApplication(ctk.CTk):
 
     def set_sku_inventory(self, sku_inventory):
         self.sku_inventory = sku_inventory
+
+    def get_number(self):
+        return self.order_number
+
+    def add_number(self):
+        self.order_number += 1
 
     def print_skus(self):
         items = self.sku_inventory.get_items()

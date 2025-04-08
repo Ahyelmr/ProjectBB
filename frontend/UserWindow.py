@@ -1,11 +1,16 @@
 import customtkinter as ctk
 
+from frontend.CustomerView import CustomerTopLevel
+
+
 class UserFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
         #self.grid_rowconfigure(0, weight=1)
         #self.grid_columnconfigure(0, weight=1)
+
+        self.customer_window = CustomerTopLevel(self)
 
         self.user_label = ctk.CTkLabel(self, text = "User")
 

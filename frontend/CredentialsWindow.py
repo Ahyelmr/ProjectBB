@@ -2,6 +2,20 @@ import tkinter as tk
 import customtkinter as ctk
 from backend.Authentication import *
 
+
+def open_confirmation_window(label):
+    confirm_box = tk.Toplevel()
+    confirm_box.title("Log In")
+    confirm_box.resizable(False, False)
+    confirm_box.geometry("200x150")
+
+    confirm_login = tk.Label(confirm_box, text=label)
+    confirm_login.pack(expand=True)
+
+    confirm_button = tk.Button(confirm_box, text="Confirm", command=confirm_box.destroy)
+    confirm_button.pack(expand=True)
+
+
 class CredentialsFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
@@ -40,7 +54,7 @@ class CredentialsFrame(ctk.CTkFrame):
         if login:
             if user_login(username, password):
                 self.set_verify_label("You have logged in successfully!")
-                self.open_confirmation_window("Successfully Logged In!")
+                open_confirmation_window("Successfully Logged In!")
                 self.after(100, self.parent.show_frame("UserFrame"))
 
             else:
@@ -49,7 +63,7 @@ class CredentialsFrame(ctk.CTkFrame):
         else:
             if register_user(username, password):
                 self.set_verify_label("You have registered successfully!")
-                self.open_confirmation_window("Successfully Registered!")
+                open_confirmation_window("Successfully Registered!")
                 self.after(100, self.parent.show_frame("MainFrame"))
             else:
                 self.set_verify_label("User has already been registered!")
@@ -71,17 +85,5 @@ class CredentialsFrame(ctk.CTkFrame):
 
     def set_verify_label(self, label):
         self.verifyLabel.configure(text=label)
-
-    def open_confirmation_window(self, label):
-        confirm_box = tk.Toplevel()
-        confirm_box.title("Log In")
-        confirm_box.resizable(False, False)
-        confirm_box.geometry("200x150")
-
-        confirm_login = tk.Label(confirm_box, text=label)
-        confirm_login.pack(expand=True)
-
-        confirm_button = tk.Button(confirm_box, text="Confirm", command=confirm_box.destroy)
-        confirm_button.pack(expand=True)
 
 

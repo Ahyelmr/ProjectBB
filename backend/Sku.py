@@ -11,6 +11,15 @@ class Sku:
             if item.get_name() == name:
                 self.inventory.remove(item)
 
+    def get_categories(self) :
+        categories = []
+        for item in self.inventory:
+            categories.append(item.get_category())
+
+        unique_categories = list(dict.fromkeys(categories))
+
+        return unique_categories
+
     def get_inventory(self):
         return self.inventory
 
