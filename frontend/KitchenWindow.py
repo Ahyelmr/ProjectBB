@@ -7,14 +7,17 @@ class MainKitchenFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
+        self.options_frame = OptionsFrame(self)
+        self.kitchen_frame = KitchenFrame(self)
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=3)
         self.grid_columnconfigure(1, weight=1)
-        self.kitchen_frame = KitchenFrame(self)
-        self.options_frame = OptionsFrame(self)
         self.kitchen_frame.grid(row = 0, column = 0, sticky = "nsew")
         self.options_frame.grid(row = 0, column = 1, sticky = "nsew")
 
+    def add_order(self, item):
+        self.options_frame.add_to_list(item.get_name(), item.get_price())
+        print(item.get_name() + " " + item.get_price())
 
 
 class KitchenFrame(ctk.CTkScrollableFrame):
@@ -40,10 +43,6 @@ class KitchenFrame(ctk.CTkScrollableFrame):
                 else:
                     break
 
-    def return_screen(self, name):
-        self.parent.show_screen(name)
-
-
 class OptionsFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
@@ -56,9 +55,17 @@ class OptionsFrame(ctk.CTkFrame):
         self.return_box = ctk.CTkButton(self, text = "Return", command = self.return_button_click)
         self.return_box.pack(side = "top", fill = "x", pady = 10)
 
+        self.order_list = tk.Listbox(self)
+        self.order_list.pack(side = "top", fill = "x", pady = 10)
+
     def return_button_click(self, event = None):
         self.parent.parent.show_frame("MainFrame")
 
+    def add_to_list(self, name, price):
+        order = str(name) + " " + str(price)
+        if order:
+            self.order_list.insert(tk.END, order)
+            self.order_list.see(tk.END)
 
 class ItemFrame(ctk.CTkFrame):
     def __init__(self, parent, item):
@@ -75,5 +82,8 @@ class ItemFrame(ctk.CTkFrame):
         self.item_price = ctk.CTkLabel(self, text = item.get_price())
         self.item_price.grid(row = 2, column = 0, sticky = "nsew")
 
-        self.item_button = ctk.CTkButton(self, text = "Add")
+        self.item_button = ctk.CTkButton(self, text = "Add", command=lambda: self.add_button_click(item))
         self.item_button.grid(row = 3, column = 0, sticky = "nsew")
+
+    def add_button_click(self, item):
+        self.parent.parent.add_order(item)
