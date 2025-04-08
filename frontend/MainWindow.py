@@ -3,6 +3,7 @@ import tkinter as tk
 import customtkinter as ctk
 
 from backend import FilePathing
+from frontend.CustomerView import CustomerTopLevel
 
 
 class MainFrame(ctk.CTkFrame):

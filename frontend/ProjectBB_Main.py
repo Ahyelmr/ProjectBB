@@ -59,6 +59,12 @@ class MainApplication(ctk.CTk):
     def set_sku_inventory(self, sku_inventory):
         self.sku_inventory = sku_inventory
 
+    def get_number(self):
+        return self.order_number
+
+    def add_number(self):
+        self.order_number += 1
+
     def print_skus(self):
         items = self.sku_inventory.get_items()
         for item in items:

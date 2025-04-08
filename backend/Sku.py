@@ -15,11 +15,9 @@ class Sku:
         categories = []
         for item in self.inventory:
             categories.append(item.get_category())
-            print(item)
 
         unique_categories = list(dict.fromkeys(categories))
-        for yes in unique_categories:
-            print(yes)
+
         return unique_categories
 
     def get_inventory(self):
