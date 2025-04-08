@@ -12,7 +12,7 @@ class MainKitchenFrame(ctk.CTkFrame):
         super().__init__(parent)
         self.parent = parent
         self.options_frame = OptionsFrame(self)
-        self.kitchen_frame = KitchenFrame(self)
+        self.kitchen_frame = KitchenFrame(self, self.parent.get_sku_inventory())
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=3)
         self.grid_columnconfigure(1, weight=1)
@@ -25,12 +25,12 @@ class MainKitchenFrame(ctk.CTkFrame):
 
 
 class KitchenFrame(ctk.CTkScrollableFrame):
-    def __init__(self, parent):
+    def __init__(self, parent, items):
         super().__init__(parent)
 
         self.parent = parent
 
-        size = self.parent.parent.get_sku_inventory().get_size()
+        size = items.get_size()
         print(size)
         l = size//5
         k = 0
@@ -38,7 +38,7 @@ class KitchenFrame(ctk.CTkScrollableFrame):
         for i in range(l):
             for j in range(5):
                 if i+j < size:
-                    item = self.parent.parent.get_sku_inventory().getIn_item(k)
+                    item = items.getIn_item(k)
                     item_frame = ItemFrame(self, item)
                     item_frame.grid(row = i, column = j, sticky = "nsew")
                     item_frame.grid_rowconfigure(i, weight = 1)
@@ -94,6 +94,7 @@ class OptionsFrame(ctk.CTkFrame):
         order = Order(self.parent.parent.get_number())
         for i in range(self.order_list.size()):
             price = self.order_list.get(i).split(" ")[1]
+
         self.parent.parent.add_number()
 
     def sort_order_click(self):
