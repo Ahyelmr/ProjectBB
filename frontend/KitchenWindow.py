@@ -51,16 +51,18 @@ class OptionsFrame(ctk.CTkFrame):
 
         self.parent = parent
 
-        self.category_order = ctk.CTkComboBox(self)
+        self.category_order = ctk.CTkComboBox(self, values=self.parent.parent.get_sku_inventory().get_categories())
+        self.category_order.pack(side="top", fill="x", pady=10)
+        self.category_order.set("Category")
 
         self.text_box = ctk.CTkLabel(self, text="Kitchen")
         self.text_box.pack(side = "top", fill = "x", pady = 10)
 
-        self.return_button = ctk.CTkButton(self, text = "Return", command = lambda :self.return_button_click)
+        self.return_button = ctk.CTkButton(self, text = "Return", command = lambda : self.return_button_click())
         self.return_button.pack(side = "top", fill = "x", pady = 10)
 
         self.order_list = tk.Listbox(self)
-        self.order_list.pack(side = "top", fill = "x", pady = 10)
+        self.order_list.pack(side = "top", fill = "both", pady = 10)
 
         self.confirm_order_button = ctk.CTkButton(self, text = "")
 
