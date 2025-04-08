@@ -1,6 +1,8 @@
 import tkinter as tk
 import customtkinter as ctk
 from PIL import Image, ImageTk
+
+from backend import FilePathing
 from backend.Item import SkuItem
 
 class MainKitchenFrame(ctk.CTkFrame):
@@ -28,10 +30,10 @@ class KitchenFrame(ctk.CTkScrollableFrame):
 
         size = self.parent.parent.get_sku_inventory().get_size()
         print(size)
-        l = 5
+        l = size//5
         k = 0
 
-        for i in range(5):
+        for i in range(l):
             for j in range(5):
                 if i+j < size:
                     item = self.parent.parent.get_sku_inventory().getIn_item(k)
@@ -49,16 +51,20 @@ class OptionsFrame(ctk.CTkFrame):
 
         self.parent = parent
 
+        self.category_order = ctk.CTkComboBox(self)
+
         self.text_box = ctk.CTkLabel(self, text="Kitchen")
         self.text_box.pack(side = "top", fill = "x", pady = 10)
 
-        self.return_box = ctk.CTkButton(self, text = "Return", command = self.return_button_click)
-        self.return_box.pack(side = "top", fill = "x", pady = 10)
+        self.return_button = ctk.CTkButton(self, text = "Return", command = lambda :self.return_button_click)
+        self.return_button.pack(side = "top", fill = "x", pady = 10)
 
         self.order_list = tk.Listbox(self)
         self.order_list.pack(side = "top", fill = "x", pady = 10)
 
-    def return_button_click(self, event = None):
+        self.confirm_order_button = ctk.CTkButton(self, text = "")
+
+    def return_button_click(self):
         self.parent.parent.show_frame("MainFrame")
 
     def add_to_list(self, name, price):
@@ -72,7 +78,7 @@ class ItemFrame(ctk.CTkFrame):
         super().__init__(parent)
         self.parent = parent
 
-        self.item_image = Image.open("Assets/SKU-Inv/" + item.get_image())
+        self.item_image = Image.open(FilePathing.resource_path("Assets/SKU-Inv/" + item.get_image()))
         self.item_image_label = ctk.CTkLabel(self, text = " ", image = ctk.CTkImage(self.item_image, size = (200, 200)), width = 200, height = 200)
         self.item_image_label.grid(row = 0, column = 0, sticky = "nsew")
 

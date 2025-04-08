@@ -41,7 +41,7 @@ class CredentialsFrame(ctk.CTkFrame):
             if user_login(username, password):
                 self.set_verify_label("You have logged in successfully!")
                 self.open_confirmation_window("Successfully Logged In!")
-                self.after(100, self.parent.show_frame("MainKitchenFrame"))
+                self.after(100, self.parent.show_frame("UserFrame"))
 
             else:
                 self.set_verify_label("Invalid username or password!")

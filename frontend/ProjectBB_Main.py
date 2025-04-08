@@ -4,8 +4,13 @@ from CredentialsWindow import CredentialsFrame
 from MainWindow import MainFrame
 from KitchenWindow import MainKitchenFrame
 from backend.LoadItems import *
+from backend import FilePathing
+import os
 from backend.Sku import *
+from frontend.InventoryView import InventoryFrame
+from frontend.UserWindow import UserFrame
 
+print("Current directory: ", os.getcwd())
 
 def main():
     app = MainApplication()
@@ -15,7 +20,7 @@ class MainApplication(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.sku_inventory = export_items("Information/SKU.txt")
+        self.sku_inventory = export_items(FilePathing.resource_path("Information/SKU.txt"))
         self.title("ProjectBB")
         self.maxsize(1920, 1080)
         self.geometry("1444x900")
@@ -24,7 +29,7 @@ class MainApplication(ctk.CTk):
 
         self.frames = {}
 
-        for F in (MainFrame, CredentialsFrame, MainKitchenFrame):
+        for F in (MainFrame, CredentialsFrame, MainKitchenFrame, UserFrame, InventoryFrame):
             frame = F(self)
             self.frames[F.__name__] = frame
 

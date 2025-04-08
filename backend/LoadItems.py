@@ -9,8 +9,8 @@ def export_items(filename):
         with open(filename, "r") as f:
             items = f.readlines()
             for item in items:
-                item_name, item_sku, item_price, item_image = item.strip().split(",")
-                curr_item = SkuItem(item_name, item_sku, item_price, item_image)
+                item_name, item_sku, item_price, item_image, item_category = item.strip().split(",")
+                curr_item = SkuItem(item_name, item_sku, item_price, item_image, item_category)
                 skuList.add_item(curr_item)
                 print(skuList.get_item(item_name).get_name())
 

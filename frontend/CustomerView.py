@@ -5,8 +5,10 @@ class CustomerTopLevel(tk.Toplevel):
         super().__init__(parent)
         self.parent = parent
 
+
 class CustomerFrame(tk.Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, order):
         super().__init__(parent)
         self.parent = parent
+        self.order = order
 
