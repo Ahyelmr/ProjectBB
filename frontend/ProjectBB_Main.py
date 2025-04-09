@@ -17,6 +17,7 @@ def main():
 class MainApplication(ctk.CTk):
     def __init__(self):
         super().__init__()
+        self._set_appearance_mode("dark")
 
         self.order_number = 0
         self.user = ""
@@ -30,6 +31,7 @@ class MainApplication(ctk.CTk):
         self.grid_rowconfigure(0, weight=1)
 
         self.customer_window = CustomerTopLevel(self)
+        self.customer_window.withdraw()
 
         self.frames = {}
 
@@ -54,6 +56,7 @@ class MainApplication(ctk.CTk):
         if page == "UserFrame":
             frame.set_user_label()
             frame.show_edit_sku()
+            self.customer_window.deiconify()
 
     def get_login(self):
         return self.login
@@ -90,8 +93,8 @@ class MainApplication(ctk.CTk):
     def set_user_admin(self, user_admin):
         self.user_admin = user_admin
 
-    def add_preparing_list(self):
-        self.customer_window.preparing_frame.insert(tk.END)
+    def add_preparing_list(self, order):
+        self.customer_window.preparing_frame.insert(tk.END, order)
 
     def get_inventory(self):
         return self.inventory

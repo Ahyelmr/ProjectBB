@@ -29,9 +29,10 @@ def export_inventory(filename):
                 inventory.add_inventory_item(curr_item)
 
             return inventory
-
+"""
 def add_inventory_item(filename, item):
     if os.path.exists(resource_path(filename)):
         with open(filename, "a") as f:
 
 def edit_sku(filename):
+"""

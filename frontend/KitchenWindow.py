@@ -1,7 +1,7 @@
 import tkinter as tk
 import customtkinter as ctk
 from PIL import Image
-from backend import FilePathing
+from backend.FilePathing import resource_path
 from backend.Order import Order
 
 
@@ -103,6 +103,7 @@ class OptionsFrame(ctk.CTkFrame):
             order.add_item(item)
 
         self.parent.parent.add_number()
+        self.parent.parent.add_preparing_list(order)
 
     def sort_order_click(self):
         category = self.category_order.get()
@@ -132,7 +133,7 @@ class ItemFrame(ctk.CTkFrame):
         super().__init__(parent)
         self.parent = parent
 
-        self.item_image = Image.open(FilePathing.resource_path("Assets/SKU-Inv/" + item.get_image()))
+        self.item_image = Image.open(resource_path("Assets/SKU-Inv/" + item.get_image()))
         self.item_image_label = ctk.CTkLabel(self, text = " ", image = ctk.CTkImage(self.item_image, size = (200, 200)), width = 200, height = 200)
         self.item_image_label.grid(row = 0, column = 0, sticky = "nsew")
 
