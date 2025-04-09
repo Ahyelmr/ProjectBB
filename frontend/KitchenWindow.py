@@ -101,8 +101,10 @@ class OptionsFrame(ctk.CTkFrame):
             item = self.parent.parent.get_sku().get_item(name)
             order.add_item(item)
 
+        order_confirmation = OrderTopLevel(self, order)
         self.parent.parent.add_number()
         self.parent.parent.add_preparing_list(order)
+        self.order_list.delete(0, tk.END)
 
     def sort_order_click(self):
         category = self.category_order.get()
@@ -149,5 +151,21 @@ class ItemFrame(ctk.CTkFrame):
         self.parent.parent.add_order(item)
 
 class OrderTopLevel(ctk.CTkToplevel):
-    def __init__(self, parent):
+    def __init__(self, parent, order):
         super().__init__(parent)
+        self.configure(title="Confirm Purchase")
+        self.total = order.get_total_price()
+        self.confirm_purchase = None
+        self.confirm_text = ctk.CTkLabel(self, text = "Confirm Purchase", font=("Helvetica", 18, "bold"))
+        self.confirm_text.pack(side = "top", fill = "x")
+        self.total_label = ctk.CTkLabel(self, text = ("Total: " + self.total()))
+        self.amount_entry = ctk.CTkEntry(self, placeholder_text="Amount")
+        self.change_label = ctk.CTkLabel(self)
+
+    def set_change_label(self):
+        amount = self.amount_entry.get()
+        if amount < self.total:
+            self.change_label.config(text = "Not enough")
+            self.set_confirm_purchase(False)
+
+    def set_confirm_purchase(self, value):

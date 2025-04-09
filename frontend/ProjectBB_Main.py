@@ -101,19 +101,22 @@ class MainApplication(ctk.CTk):
         self.user_admin = user_admin
 
     def add_preparing_list(self, order):
-        self.customer_window.preparing_frame.customer_list.insert(tk.END, order.get_number())
+        order_label = str(order.get_number())
+        for item in order.get_order_items():
+            order_label += (" " + item.get_name())
+        self.customer_window.preparing_frame.customer_list.insert(tk.END, order_label)
         self.customer_window.preparing_orders.append(order)
-        self.frames["OrderFrame"].preparing_frame.customer_list.insert(tk.END, order.get_number())
+        self.frames["OrderFrame"].preparing_frame.customer_list.insert(tk.END, order_label)
         self.frames["OrderFrame"].preparing_orders.append(order)
 
     def add_ready_list(self, order, index):
-        self.customer_window.ready_frame.customer_list.insert(tk.END, order.get_number())
-        self.frames["OrderFrame"].ready_frame.customer_list.insert(tk.END, order.get_number())
+        self.customer_window.ready_frame.customer_list.insert(tk.END, order)
+        self.frames["OrderFrame"].ready_frame.customer_list.insert(tk.END, order)
         self.frames["OrderFrame"].ready_orders.append(order)
         self.customer_window.ready_orders.append(order)
         self.customer_window.preparing_frame.customer_list.delete(index)
-        self.customer_window.preparing_orders.delete(index)
-        self.frames["OrderFrame"].preparing_orders.delete(index)
+        self.customer_window.preparing_orders.pop(index)
+        self.frames["OrderFrame"].preparing_orders.pop(index)
         self.frames["OrderFrame"].preparing_frame.customer_list.delete(index)
 
     def get_inventory(self):

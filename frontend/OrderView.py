@@ -17,11 +17,15 @@ class OrderFrame(ctk.CTkFrame):
 
         self.preparing_frame.customer_list.bind("<Double-1>", self.double_click_order)
 
-        self.return_button = ctk.CTkButton(self, text="Return")
+        self.return_button = ctk.CTkButton(self, text="Return", font = self.parent.get_main_font(), command=lambda: self.on_return_button_click())
+        self.return_button.pack(side="left", expand=True, fill="both")
 
-    def double_click_order(self):
+    def double_click_order(self, event):
         index = self.preparing_frame.customer_list.curselection()
         if index:
             selected_item = self.preparing_frame.customer_list.get(index)
-            self.parent.parent.add_ready_list(selected_item, index)
+            self.parent.add_ready_list(selected_item, index)
             print(f"Double-Clicked on {selected_item}")
+
+    def on_return_button_click(self):
+        self.parent.show_frame("UserFrame")

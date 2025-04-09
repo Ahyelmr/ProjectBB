@@ -19,11 +19,8 @@ class MainFrame(ctk.CTkFrame):
         self.logoLabel.pack(padx = 10, pady = 10)
 
         self.MainLabel = ctk.CTkLabel(self, text="Project BB\nWelcome", font = self.parent.get_main_font(),
-                                      fg_color="#ed1e24", text_color="black", width = 200, height = 150, corner_radius=50)
+                                      fg_color="#ed1e24", text_color="#1a1a1a", width = 200, height = 150, corner_radius=50)
         self.MainLabel.pack(padx = 10, pady = 10)
-
-        #self.WelcomeLabel = ctk.CTkLabel(self, text="Welcome", font = self.parent.get_main_font(), fg_color="#ed1e24", text_color="black")
-        #self.WelcomeLabel.pack(padx = 10, pady = 10)
 
         self.button_frame = ctk.CTkFrame(self)
         self.button_frame.pack(anchor = "center", padx = 10, pady = 10)
