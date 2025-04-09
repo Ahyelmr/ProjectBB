@@ -8,6 +8,16 @@ def open_confirmation_window(label):
     confirm_box.title("Log In")
     confirm_box.resizable(False, False)
     confirm_box.geometry("200x150")
+    confirm_box.update_idletasks()
+    width = confirm_box.winfo_width()
+    height = confirm_box.winfo_height()
+
+    x = (confirm_box.winfo_screenwidth() // 2) - (width // 2)
+    y = (confirm_box.winfo_screenheight() // 2) - (height // 2)
+    confirm_box.geometry(f"{width}x{height}+{x}+{y}")
+    confirm_box.focus_force()
+    confirm_box.lift()
+
 
     confirm_login = tk.Label(confirm_box, text=label)
     confirm_login.pack(expand=True)
@@ -37,16 +47,16 @@ class CredentialsFrame(ctk.CTkFrame):
         self.passwordEntry = ctk.CTkEntry(self, show="*")
         self.passwordEntry.pack(expand = True)
 
-        self.enterButton = ctk.CTkButton(self, text="Enter", command=self.on_enter_button_clicked,font = ("Helvetica", 20))
+        self.enterButton = ctk.CTkButton(self, text="Enter", command=lambda: self.on_enter_button_clicked(), font = ("Helvetica", 20))
         self.enterButton.pack(expand = True)
 
         self.verifyLabel = ctk.CTkLabel(self)
         self.verifyLabel.pack(expand=True)
 
-        self.returnButton = ctk.CTkButton(self, text="Return", command=self.on_return_button_clicked, font = ("Helvetica", 20))
+        self.returnButton = ctk.CTkButton(self, text="Return", command=lambda: self.on_return_button_clicked(), font = ("Helvetica", 20))
         self.returnButton.pack(side=tk.LEFT, anchor="s", padx=15, pady=15)
 
-    def on_enter_button_clicked(self, event=None):
+    def on_enter_button_clicked(self):
         print(self.parent.get_login())
         username = self.usernameEntry.get()
         password = self.passwordEntry.get()
@@ -55,6 +65,8 @@ class CredentialsFrame(ctk.CTkFrame):
             if user_login(username, password):
                 self.set_verify_label("You have logged in successfully!")
                 open_confirmation_window("Successfully Logged In!")
+                self.parent.set_user(username)
+                self.parent.set_user_admin(check_admin(username, password))
                 self.after(100, self.parent.show_frame("UserFrame"))
 
             else:
@@ -68,11 +80,7 @@ class CredentialsFrame(ctk.CTkFrame):
             else:
                 self.set_verify_label("User has already been registered!")
 
-
-        if username == "123" and password == "456":
-            print("You are logged in")
-
-    def on_return_button_clicked(self, event=None):
+    def on_return_button_clicked(self):
         self.parent.show_frame("MainFrame")
 
     def set_credentials_label(self):

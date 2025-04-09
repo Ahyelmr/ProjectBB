@@ -43,4 +43,4 @@ Salted Egg,CW07,139,Salted Egg.png,Chicken Wings
 Yangnyeom Style,CW08,139,Yangnyeom Style.png,Chicken Wings
 Orange Panda,CW09,129,Orange Panda.png,Chicken Wings
 Snow Cheese,CW10,139,Snow Cheese.png,Chicken Wings
-Flamin’ Cheetos,CW11,139,Flamin’ Cheetos.png,Chicken Wings
+Flaming Cheetos,CW11,139,Flaming Cheetos.png,Chicken Wings
