@@ -23,6 +23,7 @@ class MainApplication(ctk.CTk):
 
         self.order_number = 0
         self.user = ""
+
         self.sku_inventory = export_items(FilePathing.resource_path("Information/SKU.txt"))
         self.title("ProjectBB")
         self.maxsize(1920, 1080)
@@ -37,6 +38,7 @@ class MainApplication(ctk.CTk):
             self.frames[F.__name__] = frame
 
         self.login = None
+        self.user_admin = None
 
         self.show_frame("MainFrame")
 
@@ -50,7 +52,8 @@ class MainApplication(ctk.CTk):
             frame.set_credentials_label()
 
         if page == "UserFrame":
-            frame.set_user_label(self.get_user())
+            frame.set_user_label()
+            frame.show_edit_sku()
 
     def get_login(self):
         return self.login
@@ -80,6 +83,12 @@ class MainApplication(ctk.CTk):
 
     def set_user(self, user):
         self.user = user
+
+    def get_user_admin(self):
+        return self.user_admin
+
+    def set_user_admin(self, user_admin):
+        self.user_admin = user_admin
 
 if __name__ == '__main__':
     main()

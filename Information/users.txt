@@ -1,3 +1,5 @@
-cubs:domingo
-Rojan:Horse
-sample:sam
+cubs:domingo:staff
+Rojan:Horse:staff
+sample:sam:staff
+adm:ad:admin
+yess:no:staff
