@@ -1,9 +1,7 @@
 import tkinter as tk
 import customtkinter as ctk
-from PIL import Image, ImageTk
-
+from PIL import Image
 from backend import FilePathing
-from backend.Item import SkuItem
 from backend.Order import Order
 
 
@@ -12,7 +10,7 @@ class MainKitchenFrame(ctk.CTkFrame):
         super().__init__(parent)
         self.parent = parent
         self.options_frame = OptionsFrame(self)
-        self.kitchen_frame = KitchenFrame(self, self.parent.get_sku_inventory().get_items())
+        self.kitchen_frame = KitchenFrame(self, self.parent.get_sku().get_items())
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=3)
         self.grid_columnconfigure(1, weight=1)
@@ -29,13 +27,11 @@ class MainKitchenFrame(ctk.CTkFrame):
         self.kitchen_frame.set_item_frames(items)
         self.kitchen_frame.grid(row = 0, column = 0, sticky = "nsew")
 
-
 class KitchenFrame(ctk.CTkScrollableFrame):
     def __init__(self, parent, items):
         super().__init__(parent)
 
         self.parent = parent
-
 
         self.set_item_frames(items)
 
@@ -51,9 +47,9 @@ class KitchenFrame(ctk.CTkScrollableFrame):
                 if k < size:
                     item = items[k]
                     item_frame = ItemFrame(self, item)
+                    item_frame.grid_rowconfigure(i, weight=1)
+                    item_frame.grid_columnconfigure(j, weight=1)
                     item_frame.grid(row = i, column = j, sticky = "nsew", padx = 2.5, pady=2.5)
-                    item_frame.grid_rowconfigure(i, weight = 1)
-                    item_frame.grid_columnconfigure(j, weight = 1)
                     k+=1
                 else:
                     break
@@ -70,7 +66,7 @@ class OptionsFrame(ctk.CTkFrame):
         self.organize_frame = ctk.CTkFrame(self)
         self.organize_frame.pack(side="top", fill="x", pady = 10)
 
-        self.category_order = ctk.CTkComboBox(self.organize_frame, values=self.parent.parent.get_sku_inventory().get_categories())
+        self.category_order = ctk.CTkComboBox(self.organize_frame, values=self.parent.parent.get_sku().get_categories())
         self.category_order.pack(fill="x", pady=10)
         self.category_order.set("Category")
 
@@ -85,6 +81,7 @@ class OptionsFrame(ctk.CTkFrame):
         self.order_list.pack(side = "top", expand=True, fill = "both", pady = 10)
 
         self.confirm_order_button = ctk.CTkButton(self, text="Confirm Order", command=lambda: self.confirm_order_click())
+        self.confirm_order_button.pack(side = "top", expand=True, fill = "x", pady = 10)
 
         self.return_button = ctk.CTkButton(self, text="Return", command=lambda: self.return_button_click())
         self.return_button.pack(side="top", fill="x", pady=10)
@@ -93,7 +90,7 @@ class OptionsFrame(ctk.CTkFrame):
         self.parent.parent.show_frame("UserFrame")
 
     def add_to_list(self, name, price):
-        order = str(name) + " " + str(price)
+        order = str(name) + ", " + str(price)
         if order:
             self.order_list.insert(tk.END, order)
             self.order_list.see(tk.END)
@@ -101,7 +98,9 @@ class OptionsFrame(ctk.CTkFrame):
     def confirm_order_click(self):
         order = Order(self.parent.parent.get_number())
         for i in range(self.order_list.size()):
-            price = self.order_list.get(i).split(" ")[1]
+            name = self.order_list.get(i).split(", ")[0]
+            item = self.parent.parent.get_sku().get_item(name)
+            order.add_item(item)
 
         self.parent.parent.add_number()
 
@@ -110,7 +109,7 @@ class OptionsFrame(ctk.CTkFrame):
         sort = self.sort_order.get()
         new_items = []
         print(category, sort)
-        for i in self.parent.parent.get_sku_inventory().get_items():
+        for i in self.parent.parent.get_sku().get_items():
             if i.get_category() == category:
                 new_items.append(i)
         if sort == "Name (Ascending)":
@@ -120,7 +119,7 @@ class OptionsFrame(ctk.CTkFrame):
         elif sort == "Price (Ascending)":
             new_items.sort(key = lambda item: item.get_price())
         elif sort == "Price (Descending)":
-            new_items.sort(key = lambda item: item.get_price(), reverse = False)
+            new_items.sort(key = lambda item: item.get_price(), reverse = True)
 
         for i in new_items:
             print(i.get_name())
