@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import font
+
 import customtkinter as ctk
 from CredentialsWindow import CredentialsFrame
 from MainWindow import MainFrame
@@ -18,15 +20,20 @@ class MainApplication(ctk.CTk):
     def __init__(self):
         super().__init__()
         self._set_appearance_mode("dark")
+        self.title("ProjectBB")
+        self.maxsize(1920, 1080)
+        self.geometry("1444x900")
 
-        self.order_number = 0
+
+        self.order_number = 1
         self.user = ""
 
         self.sku = export_sku(resource_path("Information/SKU.txt"))
         self.inventory = export_inventory(resource_path("Information/InventoryList.txt"))
-        self.title("ProjectBB")
-        self.maxsize(1920, 1080)
-        self.geometry("1444x900")
+
+        self.main_font = ("Helvetica", 36, "bold")
+        self.sub_font = ("Helvetica", 14, "bold")
+
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
@@ -94,13 +101,35 @@ class MainApplication(ctk.CTk):
         self.user_admin = user_admin
 
     def add_preparing_list(self, order):
-        self.customer_window.preparing_frame.insert(tk.END, order)
+        order_label = str(order.get_number())
+        for item in order.get_order_items():
+            order_label += (" " + item.get_name())
+        self.customer_window.preparing_frame.customer_list.insert(tk.END, order_label)
+        self.customer_window.preparing_orders.append(order)
+        self.frames["OrderFrame"].preparing_frame.customer_list.insert(tk.END, order_label)
+        self.frames["OrderFrame"].preparing_orders.append(order)
+
+    def add_ready_list(self, order, index):
+        self.customer_window.ready_frame.customer_list.insert(tk.END, order)
+        self.frames["OrderFrame"].ready_frame.customer_list.insert(tk.END, order)
+        self.frames["OrderFrame"].ready_orders.append(order)
+        self.customer_window.ready_orders.append(order)
+        self.customer_window.preparing_frame.customer_list.delete(index)
+        self.customer_window.preparing_orders.pop(index)
+        self.frames["OrderFrame"].preparing_orders.pop(index)
+        self.frames["OrderFrame"].preparing_frame.customer_list.delete(index)
 
     def get_inventory(self):
         return self.inventory
 
     def set_inventory(self, inventory):
         self.inventory = inventory
+
+    def get_main_font(self):
+        return self.main_font
+
+    def get_sub_font(self):
+        return self.sub_font
 
 if __name__ == '__main__':
     main()

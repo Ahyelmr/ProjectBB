@@ -18,7 +18,6 @@ def open_confirmation_window(label):
     confirm_box.focus_force()
     confirm_box.lift()
 
-
     confirm_login = tk.Label(confirm_box, text=label)
     confirm_login.pack(expand=True)
 

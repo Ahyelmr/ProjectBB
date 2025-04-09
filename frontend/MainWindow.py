@@ -11,25 +11,25 @@ class MainFrame(ctk.CTkFrame):
         super().__init__(parent)
 
         self.parent = parent
+        self.configure(fg_color="#fdc30d")
 
         self.logo = Image.open(FilePathing.resource_path("Assets/BigBoyzLogo.png"))
-
-        #self.configure(bg="yellow")
 
         self.logoLabel = ctk.CTkLabel(self, text = " ", image=ctk.CTkImage(self.logo, size = (500, 500)), width = 500, height = 500)
         self.logoLabel.pack(padx = 10, pady = 10)
 
-        self.MainLabel = ctk.CTkLabel(self, text="Project BB")
+        self.MainLabel = ctk.CTkLabel(self, text="Project BB\nWelcome", font = self.parent.get_main_font(),
+                                      fg_color="#ed1e24", text_color="#1a1a1a", width = 200, height = 150, corner_radius=50)
         self.MainLabel.pack(padx = 10, pady = 10)
 
-        self.WelcomeLabel = ctk.CTkLabel(self, text="Welcome")
-        self.WelcomeLabel.pack(padx = 10, pady = 10)
+        self.button_frame = ctk.CTkFrame(self)
+        self.button_frame.pack(anchor = "center", padx = 10, pady = 10)
 
-        self.SignupButton = ctk.CTkButton(self,text="Sign Up", command=lambda: self.on_signup_click())
-        self.SignupButton.pack(side = tk.LEFT, expand = True, padx = 10, pady = 10)
+        self.SignupButton = ctk.CTkButton(self.button_frame,text="Sign Up", command=lambda: self.on_signup_click(), font = self.parent.get_main_font())
+        self.SignupButton.pack(side = "left", anchor="center", padx = 10, pady = 10)
 
-        self.LoginButton = ctk.CTkButton(self, text="Login", command=lambda: self.on_login_click())
-        self.LoginButton.pack(side = tk.LEFT, expand = True, padx = 10, pady = 10)
+        self.LoginButton = ctk.CTkButton(self.button_frame, text="Login", command=lambda: self.on_login_click(), font = self.parent.get_main_font())
+        self.LoginButton.pack(side = "left", anchor="center", padx = 10, pady = 10)
 
     def on_signup_click(self):
         print("Sign Up button clicked")  # Debugging
