@@ -4,7 +4,6 @@ from PIL import Image
 from backend.FilePathing import resource_path
 from backend.Order import Order
 
-
 class MainKitchenFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
@@ -148,3 +147,7 @@ class ItemFrame(ctk.CTkFrame):
 
     def add_button_click(self, item):
         self.parent.parent.add_order(item)
+
+class OrderTopLevel(ctk.CTkToplevel):
+    def __init__(self, parent):
+        super().__init__(parent)

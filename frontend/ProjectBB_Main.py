@@ -94,7 +94,7 @@ class MainApplication(ctk.CTk):
         self.user_admin = user_admin
 
     def add_preparing_list(self, order):
-        self.customer_window.preparing_frame.insert(tk.END, order)
+        self.customer_window.preparing_frame.customer_list.insert(tk.END, order)
 
     def get_inventory(self):
         return self.inventory
