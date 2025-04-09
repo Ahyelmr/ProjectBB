@@ -16,7 +16,7 @@ class Order:
     def compute_total_price(self):
         self.total_price = 0
         for item in self.order_items:
-            self.total_price += item.price
+            self.total_price += item.get_price()
 
     def get_total_price(self):
         self.compute_total_price()

@@ -12,7 +12,7 @@ def export_sku(filename):
             items = f.readlines()
             for item in items:
                 item_name, item_sku, item_price, item_image, item_category = item.strip().split(",")
-                curr_item = SkuItem(item_name, item_sku, item_price, item_image, item_category)
+                curr_item = SkuItem(item_name, item_sku, float(item_price), item_image, item_category)
                 skuList.add_item(curr_item)
                 print(skuList.get_item(item_name).get_name())
 
