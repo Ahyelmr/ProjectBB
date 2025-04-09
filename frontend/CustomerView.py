@@ -4,6 +4,8 @@ import customtkinter as ctk
 class CustomerTopLevel(ctk.CTkToplevel):
     def __init__(self, parent):
         super().__init__(parent)
+        self.parent = parent
+        self.geometry("720x900")
         self.preparing_orders = []
         self.ready_orders = []
         self.parent = parent

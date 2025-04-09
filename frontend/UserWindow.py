@@ -1,15 +1,12 @@
 import customtkinter as ctk
 
-from frontend.CustomerView import CustomerTopLevel
-
-
 class UserFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
         #self.grid_rowconfigure(0, weight=1)
         #self.grid_columnconfigure(0, weight=1)
-        self.customer_window = CustomerTopLevel(self)
+
 
         self.user_label = ctk.CTkLabel(self)
         self.user_label.pack()
@@ -17,7 +14,10 @@ class UserFrame(ctk.CTkFrame):
         self.kitchen_button = ctk.CTkButton(self, text="Take Order", command=lambda: self.on_kitchen_button_clicked())
         self.kitchen_button.pack()
 
-        self.inventory_button = ctk.CTkButton(self, text="Check Inventory", command=lambda: self.on_inventory_button_clicked())
+        self.order_button = ctk.CTkButton(self, text="Manage Orders", command=lambda: self.on_order_button_clicked())
+        self.order_button.pack()
+
+        self.inventory_button = ctk.CTkButton(self, text="View Inventory", command=lambda: self.on_inventory_button_clicked())
         self.inventory_button.pack()
 
         self.edit_sku_button = ctk.CTkButton(self, text="Edit SKU", command=lambda: self.on_edit_sku_button_clicked())
@@ -33,7 +33,10 @@ class UserFrame(ctk.CTkFrame):
         self.parent.show_frame("MainKitchenFrame")
 
     def on_inventory_button_clicked(self):
-        self.parent.show_frame("InventoryFrame")
+        self.parent.show_frame("MainInventoryFrame")
+
+    def on_order_button_clicked(self):
+        self.parent.show_frame("OrderFrame")
 
     def on_edit_sku_button_clicked(self):
         self.parent.show_frame("EditSKUFrame")

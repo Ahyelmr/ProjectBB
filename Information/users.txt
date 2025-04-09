@@ -1,5 +1,2 @@
-cubs:domingo:staff
-Rojan:Horse:staff
-sample:sam:staff
-adm:ad:admin
-yess:no:staff
+Admin1:@dm1n:admin
+Staff1:st@Ff:staff

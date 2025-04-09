@@ -33,9 +33,26 @@ class SkuItem:
     def set_category(self, category):
         self.category = category
 
-class MenuItem:
-    def __init__(self, name, image):
-        self.name = name
-        self.image = image
-    def get_name(self):
-        return self.name
+class InventoryItem:
+    def __init__(self, inventory_name, inventory_amount, inventory_image):
+        self.inventory_name = inventory_name
+        self.inventory_image = inventory_image
+        self.inventory_amount = inventory_amount
+
+    def get_inventory_name(self):
+        return self.inventory_name
+
+    def set_inventory_name(self, inventory_name):
+        self.inventory_name = inventory_name
+
+    def get_inventory_image(self):
+        return self.inventory_image
+
+    def set_inventory_image(self, inventory_image):
+        self.inventory_image = inventory_image
+
+    def get_inventory_amount(self):
+        return self.inventory_amount
+
+    def set_inventory_amount(self, inventory_amount):
+        self.inventory_amount = inventory_amount

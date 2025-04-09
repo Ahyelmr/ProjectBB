@@ -4,14 +4,11 @@ from CredentialsWindow import CredentialsFrame
 from MainWindow import MainFrame
 from KitchenWindow import MainKitchenFrame
 from backend.LoadItems import *
-from backend import FilePathing
-import os
-from backend.Sku import *
+from frontend.CustomerView import CustomerTopLevel
 from frontend.EditSKUWindow import EditSKUFrame
-from frontend.InventoryView import InventoryFrame
+from frontend.InventoryView import MainInventoryFrame
+from frontend.OrderView import OrderFrame
 from frontend.UserWindow import UserFrame
-
-print("Current directory: ", os.getcwd())
 
 def main():
     app = MainApplication()
@@ -20,20 +17,25 @@ def main():
 class MainApplication(ctk.CTk):
     def __init__(self):
         super().__init__()
+        self._set_appearance_mode("dark")
 
         self.order_number = 0
         self.user = ""
 
-        self.sku_inventory = export_items(FilePathing.resource_path("Information/SKU.txt"))
+        self.sku = export_sku(resource_path("Information/SKU.txt"))
+        self.inventory = export_inventory(resource_path("Information/InventoryList.txt"))
         self.title("ProjectBB")
         self.maxsize(1920, 1080)
         self.geometry("1444x900")
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
+        self.customer_window = CustomerTopLevel(self)
+        self.customer_window.withdraw()
+
         self.frames = {}
 
-        for F in (MainFrame, CredentialsFrame, MainKitchenFrame, UserFrame, InventoryFrame, EditSKUFrame):
+        for F in (MainFrame, CredentialsFrame, MainKitchenFrame, UserFrame, MainInventoryFrame, OrderFrame, EditSKUFrame):
             frame = F(self)
             self.frames[F.__name__] = frame
 
@@ -54,6 +56,7 @@ class MainApplication(ctk.CTk):
         if page == "UserFrame":
             frame.set_user_label()
             frame.show_edit_sku()
+            self.customer_window.deiconify()
 
     def get_login(self):
         return self.login
@@ -61,11 +64,11 @@ class MainApplication(ctk.CTk):
     def set_login(self, login):
         self.login = login
 
-    def get_sku_inventory(self):
-        return self.sku_inventory
+    def get_sku(self):
+        return self.sku
 
-    def set_sku_inventory(self, sku_inventory):
-        self.sku_inventory = sku_inventory
+    def set_sku(self, sku_inventory):
+        self.sku = sku_inventory
 
     def get_number(self):
         return self.order_number
@@ -74,7 +77,7 @@ class MainApplication(ctk.CTk):
         self.order_number += 1
 
     def print_skus(self):
-        items = self.sku_inventory.get_items()
+        items = self.sku.get_items()
         for item in items:
             print(item.get_name())
 
@@ -89,6 +92,15 @@ class MainApplication(ctk.CTk):
 
     def set_user_admin(self, user_admin):
         self.user_admin = user_admin
+
+    def add_preparing_list(self, order):
+        self.customer_window.preparing_frame.insert(tk.END, order)
+
+    def get_inventory(self):
+        return self.inventory
+
+    def set_inventory(self, inventory):
+        self.inventory = inventory
 
 if __name__ == '__main__':
     main()
