@@ -7,7 +7,6 @@ class UserFrame(ctk.CTkFrame):
         #self.grid_rowconfigure(0, weight=1)
         #self.grid_columnconfigure(0, weight=1)
 
-
         self.user_label = ctk.CTkLabel(self)
         self.user_label.pack()
 

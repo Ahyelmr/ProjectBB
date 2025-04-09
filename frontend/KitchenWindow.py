@@ -76,7 +76,7 @@ class OptionsFrame(ctk.CTkFrame):
         self.sort_button = ctk.CTkButton(self.organize_frame, text="Sort", command=lambda: self.sort_order_click())
         self.sort_button.pack(side="bottom", fill="x", pady=10)
 
-        self.order_list = tk.Listbox(self)
+        self.order_list = tk.Listbox(self, font= ("Helvetica", 16, "bold"))
         self.order_list.pack(side = "top", expand=True, fill = "both", pady = 10)
 
         self.confirm_order_button = ctk.CTkButton(self, text="Confirm Order", command=lambda: self.confirm_order_click())

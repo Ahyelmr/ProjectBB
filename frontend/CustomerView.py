@@ -9,7 +9,7 @@ class CustomerTopLevel(ctk.CTkToplevel):
         self.preparing_orders = []
         self.ready_orders = []
         self.parent = parent
-        self.title = "Customer Orders"
+        self.configure(title="Customer Orders")
 
         self.overall_frame = ctk.CTkFrame(self)
         self.overall_frame.pack(expand=True, fill="both")
@@ -23,8 +23,8 @@ class OrdersFrame(ctk.CTkFrame):
         super().__init__(parent)
         self.parent = parent
 
-        self.label = ctk.CTkLabel(self, text = name)
+        self.label = ctk.CTkLabel(self, text = name, font= ("Helvetica", 16, "bold"))
         self.label.pack(side="top", fill="x")
 
         self.customer_list = tk.Listbox(self)
-        self.customer_list.pack(side="top", expand = True, fill="both")
+        self.customer_list.pack(side="top", expand = True, fill="both", font= ("Helvetica", 16, "bold"))
