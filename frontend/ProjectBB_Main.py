@@ -7,6 +7,7 @@ from backend.LoadItems import *
 from backend import FilePathing
 import os
 from backend.Sku import *
+from frontend.EditSKUWindow import EditSKUFrame
 from frontend.InventoryView import InventoryFrame
 from frontend.UserWindow import UserFrame
 
@@ -21,6 +22,7 @@ class MainApplication(ctk.CTk):
         super().__init__()
 
         self.order_number = 0
+        self.user = ""
         self.sku_inventory = export_items(FilePathing.resource_path("Information/SKU.txt"))
         self.title("ProjectBB")
         self.maxsize(1920, 1080)
@@ -30,7 +32,7 @@ class MainApplication(ctk.CTk):
 
         self.frames = {}
 
-        for F in (MainFrame, CredentialsFrame, MainKitchenFrame, UserFrame, InventoryFrame):
+        for F in (MainFrame, CredentialsFrame, MainKitchenFrame, UserFrame, InventoryFrame, EditSKUFrame):
             frame = F(self)
             self.frames[F.__name__] = frame
 
@@ -46,6 +48,9 @@ class MainApplication(ctk.CTk):
 
         if page == "CredentialsFrame":
             frame.set_credentials_label()
+
+        if page == "UserFrame":
+            frame.set_user_label(self.get_user())
 
     def get_login(self):
         return self.login
@@ -69,6 +74,12 @@ class MainApplication(ctk.CTk):
         items = self.sku_inventory.get_items()
         for item in items:
             print(item.get_name())
+
+    def get_user(self):
+        return self.user
+
+    def set_user(self, user):
+        self.user = user
 
 if __name__ == '__main__':
     main()

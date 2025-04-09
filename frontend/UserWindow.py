@@ -9,23 +9,22 @@ class UserFrame(ctk.CTkFrame):
         self.parent = parent
         #self.grid_rowconfigure(0, weight=1)
         #self.grid_columnconfigure(0, weight=1)
-
         self.customer_window = CustomerTopLevel(self)
 
-        self.user_label = ctk.CTkLabel(self, text = "User")
+        self.user_label = ctk.CTkLabel(self)
+        self.set_user_label(self.parent.get_user())
 
         self.kitchen_button = ctk.CTkButton(self, text="Take Order", command=lambda: self.on_kitchen_button_clicked())
-        self.kitchen_button.grid(row=0, column=0, sticky="nsew")
+        self.kitchen_button.pack()
 
         self.inventory_button = ctk.CTkButton(self, text="Check Inventory", command=lambda: self.on_inventory_button_clicked())
-        self.inventory_button.grid(row=1, column=0, sticky="nsew")
+        self.inventory_button.pack()
 
-        self.edit_sku_button = ctk.CTkButton(self, text="Edit SKU")
-        self.edit_sku_button.grid(row=2, column=0, sticky="nsew")
-        self.edit_sku_button.grid_forget()
+        self.edit_sku_button = ctk.CTkButton(self, text="Edit SKU", command=lambda: self.on_edit_sku_button_clicked())
+        self.show_edit_sku(True)
 
         self.return_button = ctk.CTkButton(self, text="Return to Menu", command=lambda: self.on_return_button_clicked())
-        self.return_button.grid(row=3, column=0, sticky="nsew")
+        self.return_button.pack()
 
     def on_return_button_clicked(self):
         self.parent.show_frame("MainFrame")
@@ -35,3 +34,16 @@ class UserFrame(ctk.CTkFrame):
 
     def on_inventory_button_clicked(self):
         self.parent.show_frame("InventoryFrame")
+
+    def on_edit_sku_button_clicked(self):
+        self.parent.show_frame("EditSkuFrame")
+
+    def set_user_label(self, user):
+        self.user_label.configure(text = "Welcome " + user + "!")
+        self.pack()
+
+    def show_edit_sku(self, admin):
+        if admin:
+            self.edit_sku_button.pack()
+        else:
+            self.edit_sku_button.pack_forget()

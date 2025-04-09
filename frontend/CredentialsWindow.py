@@ -37,16 +37,16 @@ class CredentialsFrame(ctk.CTkFrame):
         self.passwordEntry = ctk.CTkEntry(self, show="*")
         self.passwordEntry.pack(expand = True)
 
-        self.enterButton = ctk.CTkButton(self, text="Enter", command=self.on_enter_button_clicked,font = ("Helvetica", 20))
+        self.enterButton = ctk.CTkButton(self, text="Enter", command=lambda: self.on_enter_button_clicked, font = ("Helvetica", 20))
         self.enterButton.pack(expand = True)
 
         self.verifyLabel = ctk.CTkLabel(self)
         self.verifyLabel.pack(expand=True)
 
-        self.returnButton = ctk.CTkButton(self, text="Return", command=self.on_return_button_clicked, font = ("Helvetica", 20))
+        self.returnButton = ctk.CTkButton(self, text="Return", command=lambda: self.on_return_button_clicked, font = ("Helvetica", 20))
         self.returnButton.pack(side=tk.LEFT, anchor="s", padx=15, pady=15)
 
-    def on_enter_button_clicked(self, event=None):
+    def on_enter_button_clicked(self):
         print(self.parent.get_login())
         username = self.usernameEntry.get()
         password = self.passwordEntry.get()
@@ -56,6 +56,7 @@ class CredentialsFrame(ctk.CTkFrame):
                 self.set_verify_label("You have logged in successfully!")
                 open_confirmation_window("Successfully Logged In!")
                 self.after(100, self.parent.show_frame("UserFrame"))
+                self.parent.set_user(username)
 
             else:
                 self.set_verify_label("Invalid username or password!")
@@ -72,7 +73,7 @@ class CredentialsFrame(ctk.CTkFrame):
         if username == "123" and password == "456":
             print("You are logged in")
 
-    def on_return_button_clicked(self, event=None):
+    def on_return_button_clicked(self):
         self.parent.show_frame("MainFrame")
 
     def set_credentials_label(self):

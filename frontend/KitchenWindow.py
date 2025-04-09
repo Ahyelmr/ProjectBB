@@ -12,7 +12,7 @@ class MainKitchenFrame(ctk.CTkFrame):
         super().__init__(parent)
         self.parent = parent
         self.options_frame = OptionsFrame(self)
-        self.kitchen_frame = KitchenFrame(self, self.parent.get_sku_inventory())
+        self.kitchen_frame = KitchenFrame(self, self.parent.get_sku_inventory().get_items())
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=3)
         self.grid_columnconfigure(1, weight=1)
@@ -23,6 +23,12 @@ class MainKitchenFrame(ctk.CTkFrame):
         self.options_frame.add_to_list(item.get_name(), item.get_price())
         print(item.get_name() + " " + item.get_price())
 
+    def set_kitchen_items(self, items):
+        for widget in self.kitchen_frame.winfo_children():
+            widget.destroy()
+        self.kitchen_frame.set_item_frames(items)
+        self.kitchen_frame.grid(row = 0, column = 0, sticky = "nsew")
+
 
 class KitchenFrame(ctk.CTkScrollableFrame):
     def __init__(self, parent, items):
@@ -30,17 +36,22 @@ class KitchenFrame(ctk.CTkScrollableFrame):
 
         self.parent = parent
 
-        size = items.get_size()
-        print(size)
-        l = size//5
-        k = 0
 
-        for i in range(l):
-            for j in range(5):
-                if i+j < size:
-                    item = items.getIn_item(k)
+        self.set_item_frames(items)
+
+    def set_item_frames(self, items):
+        size = len(items)
+        cols = 5
+        rows = (size + cols - 1) // cols
+        k = 0
+        for i in range(rows):
+            for j in range(cols):
+                self.grid_rowconfigure(i, weight=1)
+                self.grid_columnconfigure(j, weight=1)
+                if k < size:
+                    item = items[k]
                     item_frame = ItemFrame(self, item)
-                    item_frame.grid(row = i, column = j, sticky = "nsew")
+                    item_frame.grid(row = i, column = j, sticky = "nsew", padx = 2.5, pady=2.5)
                     item_frame.grid_rowconfigure(i, weight = 1)
                     item_frame.grid_columnconfigure(j, weight = 1)
                     k+=1
@@ -67,22 +78,19 @@ class OptionsFrame(ctk.CTkFrame):
         self.sort_order.pack(fill="x", pady=10)
         self.sort_order.set("Order")
 
-        self.sort_button = ctk.CTkButton(self.organize_frame, text="Sort", command=lambda: self.sort_order)
+        self.sort_button = ctk.CTkButton(self.organize_frame, text="Sort", command=lambda: self.sort_order_click())
         self.sort_button.pack(side="bottom", fill="x", pady=10)
 
         self.order_list = tk.Listbox(self)
-        self.order_list.pack(side = "top", fill = "both", pady = 10)
+        self.order_list.pack(side = "top", expand=True, fill = "both", pady = 10)
 
-        self.confirm_order_button = ctk.CTkButton(self, text="Confirm Order")
-
-
-        self.confirm_order_button = ctk.CTkButton(self, text = "")
+        self.confirm_order_button = ctk.CTkButton(self, text="Confirm Order", command=lambda: self.confirm_order_click())
 
         self.return_button = ctk.CTkButton(self, text="Return", command=lambda: self.return_button_click())
         self.return_button.pack(side="top", fill="x", pady=10)
 
     def return_button_click(self):
-        self.parent.parent.show_frame("MainFrame")
+        self.parent.parent.show_frame("UserFrame")
 
     def add_to_list(self, name, price):
         order = str(name) + " " + str(price)
@@ -98,7 +106,26 @@ class OptionsFrame(ctk.CTkFrame):
         self.parent.parent.add_number()
 
     def sort_order_click(self):
-        print(1)
+        category = self.category_order.get()
+        sort = self.sort_order.get()
+        new_items = []
+        print(category, sort)
+        for i in self.parent.parent.get_sku_inventory().get_items():
+            if i.get_category() == category:
+                new_items.append(i)
+        if sort == "Name (Ascending)":
+            new_items.sort(key = lambda item: item.get_name())
+        elif sort == "Name (Descending)":
+            new_items.sort(key = lambda item: item.get_name(), reverse = True)
+        elif sort == "Price (Ascending)":
+            new_items.sort(key = lambda item: item.get_price())
+        elif sort == "Price (Descending)":
+            new_items.sort(key = lambda item: item.get_price(), reverse = False)
+
+        for i in new_items:
+            print(i.get_name())
+
+        self.parent.set_kitchen_items(new_items)
 
 
 class ItemFrame(ctk.CTkFrame):
