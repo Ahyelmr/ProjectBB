@@ -37,7 +37,12 @@ def add_inventory_item(filename, item):
 def edit_sku(filename):
 """
 
-def add_report(filename, value):
+def create_file(filename, value):
+    if not os.path.exists(filename):
+        with open(filename, "w") as f:
+            f.write(value)
+
+def add_to_file(filename, value):
     if not os.path.exists(filename):
         with open(filename, "w") as f:
             f.write(value+"\n")

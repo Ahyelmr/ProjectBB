@@ -14,8 +14,9 @@ class MainInventoryFrame(ctk.CTkFrame):
         self.grid(row = 0, column = 0, sticky = "nsew")
 
         self.return_button = ctk.CTkButton(self, text = "Return", command=lambda: self.on_return_button_clicked())
+        self.return_button.grid(row = 0, column = 1, sticky = "nsew")
 
-        self.inventory_frame.grid(row=0, column=0, sticky="nsew")
+        self.inventory_frame.grid(row=1, column=0, sticky="nsew", columnspan = 2)
         self.inventory_frame.set_inventory_frames(self.parent.get_inventory().get_inventory_items())
 
     def on_return_button_clicked(self):

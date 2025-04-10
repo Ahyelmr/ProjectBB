@@ -23,7 +23,7 @@ class MainApplication(ctk.CTk):
         super().__init__()
         self.daily_report_file = "Records/" + str(datetime.datetime.now().strftime("%Y_%m_%d")) + ".txt"
         print(self.daily_report_file)
-        add_report(resource_path(self.daily_report_file), str(datetime.datetime.now().strftime("%Y_%m_%d")))
+        create_file(resource_path(self.daily_report_file), str(datetime.datetime.now().strftime("%Y_%m_%d")))
         self._set_appearance_mode("dark")
         self.title("ProjectBB")
         self.maxsize(1920, 1080)
@@ -120,24 +120,24 @@ class MainApplication(ctk.CTk):
         for item in order.get_order_items():
             order_label += (" " + item.get_name())
         self.customer_window.ready_frame.customer_list.insert(tk.END, order_label)
+        self.customer_window.ready_orders.append(order)
         self.frames["OrderFrame"].ready_frame.customer_list.insert(tk.END, order_label)
         self.frames["OrderFrame"].ready_orders.append(order)
-        self.customer_window.ready_orders.append(order)
+
         self.customer_window.preparing_frame.customer_list.delete(index)
-        self.customer_window.preparing_orders.pop(index)
-        del self.customer_window.ready_orders[index]
-        del self.frames["OrderFrame"].preparing_orders[index]
+        self.customer_window.preparing_orders.remove(order)
+        self.frames["OrderFrame"].preparing_orders.remove(order)
         self.frames["OrderFrame"].preparing_frame.customer_list.delete(index)
 
     def add_order_report(self, order, index):
         order_label = str(order.get_number())
         for item in order.get_order_items():
             order_label += (" " + item.get_name())
-        add_report(resource_path(self.daily_report_file), order_label)
+        add_to_file(resource_path(self.daily_report_file), order_label)
         self.customer_window.ready_frame.customer_list.delete(index)
-        del self.customer_window.ready_frame[index]
+        self.customer_window.ready_orders.remove(order)
         self.frames["OrderFrame"].ready_frame.customer_list.delete(index)
-        del self.frames["OrderFrame"].ready_orders[index]
+        self.frames["OrderFrame"].ready_orders.remove(order)
 
 
     def get_inventory(self):
