@@ -30,7 +30,6 @@ class OrderFrame(ctk.CTkFrame):
 
     def double_click_ready(self, event):
         index = self.ready_frame.customer_list.curselection()[0]
-        print(index)
         selected_item = self.ready_orders[index]
         self.parent.add_order_report(selected_item, index)
 

@@ -1,16 +1,16 @@
 import tkinter as tk
 import customtkinter as ctk
 from backend.Authentication import *
+from PIL import Image
 
 
-def open_confirmation_window(label):
+def open_confirmation_window(label, font):
     confirm_box = ctk.CTkToplevel()
     confirm_box.title("Log In")
-    confirm_box.resizable(False, False)
-    confirm_box.geometry("200x150")
+    confirm_box.configure(fg_color="#fdc30d")
     confirm_box.update_idletasks()
-    width = confirm_box.winfo_width()
-    height = confirm_box.winfo_height()
+    width = 500
+    height = 350
 
     x = (confirm_box.winfo_screenwidth() // 2) - (width // 2)
     y = (confirm_box.winfo_screenheight() // 2) - (height // 2)
@@ -19,11 +19,11 @@ def open_confirmation_window(label):
     confirm_box.focus_force()
     confirm_box.attributes("-topmost", True)
 
-    confirm_login = ctk.CTkLabel(confirm_box, text=label)
-    confirm_login.pack(expand=True)
+    confirm_login = ctk.CTkLabel(confirm_box, text=label, font = font, text_color="#1a1a1a")
+    confirm_login.pack(expand=True, pady=10)
 
-    confirm_button = ctk.CTkButton(confirm_box, text="Confirm", command=confirm_box.destroy)
-    confirm_button.pack(expand=True)
+    confirm_button = ctk.CTkButton(confirm_box, text="Confirm", font = font, command=confirm_box.destroy)
+    confirm_button.pack(expand=True, pady=10)
 
 
 class CredentialsFrame(ctk.CTkFrame):
@@ -31,30 +31,42 @@ class CredentialsFrame(ctk.CTkFrame):
         super().__init__(parent)
 
         self.parent = parent
+        self.configure(fg_color="#fdc30d")
+
+        self.logo = Image.open(resource_path("Assets/BigBoyzLogo.png"))
+        self.logoLabel = ctk.CTkLabel(self, text=" ", image=ctk.CTkImage(self.logo, size=(400, 400)),)
+        self.logoLabel.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
         self.credentialsLabel = ctk.CTkLabel(self)
-        self.credentialsLabel.pack(side="top", expand=True)
+        self.credentialsLabel.grid(row=1, column=0, pady=10, sticky="ns")
 
-        self.usernameLabel = ctk.CTkLabel(self, text = "Username")
-        self.usernameLabel.pack(expand=True)
+        self.usernameLabel = ctk.CTkLabel(self, text="Username", font=self.parent.get_main_font())
+        self.usernameLabel.grid(row=2, column=0, pady=10, sticky="ns")
 
-        self.usernameEntry = ctk.CTkEntry(self)
-        self.usernameEntry.pack(expand = True)
+        self.usernameEntry = ctk.CTkEntry(self, placeholder_text="Username", font=self.parent.get_main_font(), width = 250)
+        self.usernameEntry.grid(row=3, column=0, pady=10, sticky="ns")
 
-        self.passwordLabel = ctk.CTkLabel(self, text="Password")
-        self.passwordLabel.pack(expand=True)
+        self.passwordLabel = ctk.CTkLabel(self, text="Password", font=self.parent.get_main_font())
+        self.passwordLabel.grid(row=4, column=0, pady=10, sticky="ns")
 
-        self.passwordEntry = ctk.CTkEntry(self, show="*")
-        self.passwordEntry.pack(expand = True)
+        self.passwordEntry = ctk.CTkEntry(self, placeholder_text="Password", show="*", font=self.parent.get_main_font(), width = 250)
+        self.passwordEntry.grid(row=5, column=0, pady=10, sticky="ns")
 
-        self.enterButton = ctk.CTkButton(self, text="Enter", command=lambda: self.on_enter_button_clicked(), font = ("Helvetica", 20))
-        self.enterButton.pack(expand = True)
+        self.enterButton = ctk.CTkButton(self, text="Enter", command=lambda: self.on_enter_button_clicked(),
+                                         font=self.parent.get_main_font())
+        self.enterButton.grid(row=6, column=0, pady=10, sticky="ns")
 
-        self.verifyLabel = ctk.CTkLabel(self)
-        self.verifyLabel.pack(expand=True)
 
-        self.returnButton = ctk.CTkButton(self, text="Return", command=lambda: self.on_return_button_clicked(), font = ("Helvetica", 20))
-        self.returnButton.pack(side=tk.LEFT, anchor="s", padx=15, pady=15)
+        self.returnButton = ctk.CTkButton(self, text="Return", command=lambda: self.on_return_button_clicked(),
+                                          font=self.parent.get_main_font())
+
+        self.returnButton.grid(row=7, column=0, pady=10, sticky="w", padx=15)
+
+        # Make sure the grid cells expand
+        self.grid_rowconfigure(0, weight=3)
+        for row in range(1, 8):
+            self.grid_rowconfigure(row, weight=1)
+        self.grid_columnconfigure(0, weight=1)
 
     def on_enter_button_clicked(self):
         print(self.parent.get_login())
@@ -63,10 +75,11 @@ class CredentialsFrame(ctk.CTkFrame):
         login = self.parent.get_login()
         if login:
             if user_login(username, password):
-                self.set_verify_label("You have logged in successfully!")
-                open_confirmation_window("Successfully Logged In!")
+                open_confirmation_window("Successfully Logged In!", self.parent.get_main_font())
                 self.parent.set_user(username)
                 self.parent.set_user_admin(check_admin(username, password))
+                self.usernameEntry.delete(0, "end")
+                self.passwordEntry.delete(0, "end")
                 self.after(100, self.parent.show_frame("UserFrame"))
 
             else:
@@ -75,23 +88,22 @@ class CredentialsFrame(ctk.CTkFrame):
         else:
             if register_user(username, password):
                 self.set_verify_label("You have registered successfully!")
-                open_confirmation_window("Successfully Registered!")
+                open_confirmation_window("Successfully Registered!", self.parent.get_main_font())
+                self.usernameEntry.delete(0, "end")
+                self.passwordEntry.delete(0, "end")
                 self.after(100, self.parent.show_frame("MainFrame"))
             else:
                 self.set_verify_label("User has already been registered!")
 
     def on_return_button_clicked(self):
+        self.usernameEntry.delete(0, "end")
+        self.passwordEntry.delete(0, "end")
         self.parent.show_frame("MainFrame")
 
     def set_credentials_label(self):
         credentials = self.parent.get_login()
         print(f"Inside set_credentials_label, login state: {credentials}")
         if credentials:
-            self.credentialsLabel.configure(text="Log In", font=("Arial", 20))
+            self.credentialsLabel.configure(text="Log In", font=self.parent.get_main_font())
         else:
-            self.credentialsLabel.configure(text="Register New Account", font=("Arial", 20))
-
-    def set_verify_label(self, label):
-        self.verifyLabel.configure(text=label)
-
-
+            self.credentialsLabel.configure(text="Register New Account", font=self.parent.get_main_font())

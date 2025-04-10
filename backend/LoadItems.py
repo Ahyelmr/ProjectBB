@@ -38,13 +38,39 @@ def create_file(filename, value):
 def add_to_file(filename, value):
     if not os.path.exists(filename):
         with open(filename, "w") as f:
-            f.write(value+"\n")
+            f.write(value)
 
     else:
-        with open(resource_path(filename), "a") as f:
-            f.write(value+"\n")
+        with open(filename, "rb") as f:  # Open in binary mode to detect newlines exactly
+            f.seek(-1, os.SEEK_END)  # Move to the last byte of the file
+            last_char = f.read(1)  # Read the last byte
+
+            # If the last character is a newline, don't add another
+            if last_char != b'\n':
+                with open(filename, "a") as f_append:
+                    f_append.write("\n" + value)
+            else:
+                with open(filename, "a") as f_append:
+                    f_append.write(value)
+
+def delete_from_file(filename, value):
+    if not os.path.exists(filename):
+        with open(filename, "w") as f:
+            f.write(value)
+
+    else:
+        with open(filename, "r") as f:
+            items = f.readlines()
+        with open(filename, "w") as f:
+            for item in items:
+                if item.strip() and not item.startswith(value):
+                    f.write(item)
+
 
 def get_report(filename):
+    report = []
     if os.path.exists(filename):
         with open(filename, "r") as f:
-            report = f.readLines()
+            report = f.readlines()
+
+    return report

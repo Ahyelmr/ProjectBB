@@ -7,7 +7,7 @@ from PIL import Image
 
 from FilePathing import resource_path, get_app_dir
 from backend.Item import SkuItem
-from backend.LoadItems import add_to_file
+from backend.LoadItems import add_to_file, delete_from_file
 
 
 class EditSKUFrame(ctk.CTkFrame):
@@ -51,11 +51,15 @@ class EditOptionsFrame(ctk.CTkFrame):
 
     def on_add_button_clicked(self):
         self.parent.show_edit_item_frame()
+        self.configure_search_label(True)
         self.parent.edit_item_frame_label("Add SKU Item")
 
     def on_delete_button_clicked(self):
-
         self.parent.edit_item_frame_label("Delete SKU Item")
+        item_name = self.search_entry.get()
+        print("Item name", item_name)
+        self.parent.parent.get_sku().remove_item(item_name)
+        delete_from_file(resource_path("Information/SKU.txt"), str(item_name))
 
     def on_search_button_clicked(self):
         item_name = self.search_entry.get()
@@ -65,6 +69,8 @@ class EditOptionsFrame(ctk.CTkFrame):
     def configure_search_label(self, found):
         if not found:
             self.search_label.configure(text="Item not found")
+        else:
+            self.search_label.forget()
 
 
 class EditItemFrame(ctk.CTkFrame):
@@ -137,14 +143,18 @@ class EditItemFrame(ctk.CTkFrame):
             print(f"Image saved to: {save_path}")
 
     def set_item_frame(self, item):
-        item_image = Image.open(resource_path("Assets/SKU-Inv/" + item.get_image()))
-        self.item_image.configure(image = ctk.CTkImage(item_image, size=(200,200)))
-        self.item_name_label.configure(text = item.get_name())
-        self.item_SKU_label.configure(text = item.get_item_sku())
-        self.item_price_label.configure(text = item.get_price())
-        self.item_category_label.configure(text = item.get_category())
-        self.item_image_button.forget()
-        self.add_item_button.forget()
+        if item is not None:
+            item_image = Image.open(resource_path("Assets/SKU-Inv/" + item.get_image()))
+            self.item_image.configure(image = ctk.CTkImage(item_image, size=(200,200)))
+            self.item_name_label.configure(text = item.get_name())
+            self.item_SKU_label.configure(text = item.get_item_sku())
+            self.item_price_label.configure(text = item.get_price())
+            self.item_category_label.configure(text = item.get_category())
+            self.item_image_button.forget()
+            self.add_item_button.forget()
+            self.item_frame_label.forget()
+        else:
+            self.parent.options_frame.configure_search_label(False)
 
     def show_add_item_frame(self):
         self.item_image.configure(image=None)
@@ -152,8 +162,8 @@ class EditItemFrame(ctk.CTkFrame):
         self.item_SKU_label.configure(text="SKU")
         self.item_price_label.configure(text="Price")
         self.item_category_label.configure(text="Category")
-        self.item_image_button.pack(side="top", fill="x")
-        self.add_item_button.pack(side="top", fill="x")
+        self.item_image_button.pack(side="top", fill="x", pady=10)
+        self.add_item_button.pack(side="top", fill="x", pady=10)
 
     def get_image_name(self):
         return self.image_name

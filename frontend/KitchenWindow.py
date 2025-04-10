@@ -179,6 +179,7 @@ class OrderTopLevel(ctk.CTkToplevel):
         self.confirm_button = ctk.CTkButton(self, text = "Confirm", command=lambda: self.on_confirm_button_click())
         self.confirm_button.pack(side = "top", fill = "x")
         self.delete_button = ctk.CTkButton(self, text = "Cancel Order",  command=lambda:self.on_delete_order_button_click())
+        self.delete_button.pack(side="top", fill = "x")
         self.destroy_button = ctk.CTkButton(self, command=self.destroy)
 
     def on_confirm_button_click(self):
@@ -188,8 +189,9 @@ class OrderTopLevel(ctk.CTkToplevel):
             self.change_label.pack(side = "top", fill = "x")
             self.set_confirm_purchase(False)
         if amount > self.total:
+            self.delete_button.forget()
             change = amount - self.total
-            self.change_label.configure(text = "Change: " + str(change))
+            self.change_label.configure(text = "Change: " + f"{change:.2f}")
             self.change_label.pack(side = "top", fill = "x")
             self.destroy_button.configure(text = "Confirm Purchase")
             self.destroy_button.pack(side = "top", fill = "x")

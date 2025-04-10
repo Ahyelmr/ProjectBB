@@ -132,7 +132,7 @@ class MainApplication(ctk.CTk):
     def add_order_report(self, order, index):
         order_label = str(order.get_number())
         for item in order.get_order_items():
-            order_label += (" " + item.get_name())
+            order_label += (", " + item.get_name())
         add_to_file(resource_path(self.daily_report_file), order_label)
         self.customer_window.ready_frame.customer_list.delete(index)
         self.customer_window.ready_orders.remove(order)
