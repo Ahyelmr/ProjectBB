@@ -22,6 +22,8 @@ class UserFrame(ctk.CTkFrame):
         self.edit_sku_button = ctk.CTkButton(self, text="Edit SKU", command=lambda: self.on_edit_sku_button_clicked())
         self.edit_sku_button.pack()
 
+        self.check_report_button = ctk.CTkButton(self, text = "View Today's Report", command=lambda: self.on_report_button_clicked())
+
         self.return_button = ctk.CTkButton(self, text="Return to Menu", command=lambda: self.on_return_button_clicked())
         self.return_button.pack()
 
@@ -39,6 +41,9 @@ class UserFrame(ctk.CTkFrame):
 
     def on_edit_sku_button_clicked(self):
         self.parent.show_frame("EditSKUFrame")
+
+    def on_report_button_clicked(self):
+        self.parent.show_frame("ReportFrame")
 
     def set_user_label(self):
         user = self.parent.get_user()

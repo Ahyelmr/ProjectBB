@@ -7,7 +7,7 @@ from backend.Sku import Sku
 
 def export_sku(filename):
     skuList = Sku()
-    if os.path.exists(resource_path(filename)):
+    if os.path.exists(filename):
         with open(filename, "r") as f:
             items = f.readlines()
             for item in items:
@@ -20,8 +20,8 @@ def export_sku(filename):
 
 def export_inventory(filename):
     inventory = Inventory()
-    if os.path.exists(resource_path(filename)):
-        with open(filename, "r") as f:
+    if os.path.exists(filename):
+        with open(resource_path(filename), "r") as f:
             items = f.readlines()
             for item in items:
                 item_name, item_amount, item_image = item.strip().split(",")
@@ -36,3 +36,17 @@ def add_inventory_item(filename, item):
 
 def edit_sku(filename):
 """
+
+def add_report(filename, value):
+    if not os.path.exists(filename):
+        with open(filename, "w") as f:
+            f.write(value+"\n")
+
+    else:
+        with open(resource_path(filename), "a") as f:
+            f.write(value+"\n")
+
+def get_report(filename):
+    if os.path.exists(filename):
+        with open(filename, "r") as f:
+            f
