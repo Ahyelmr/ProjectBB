@@ -4,28 +4,26 @@ class UserFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        #self.grid_rowconfigure(0, weight=1)
-        #self.grid_columnconfigure(0, weight=1)
 
         self.user_label = ctk.CTkLabel(self)
-        self.user_label.pack()
+        self.user_label.pack(side = "top", fill = "x", pady=20)
 
         self.kitchen_button = ctk.CTkButton(self, text="Take Order", command=lambda: self.on_kitchen_button_clicked())
-        self.kitchen_button.pack()
+        self.kitchen_button.pack(side = "top", fill = "x", pady=20)
 
         self.order_button = ctk.CTkButton(self, text="Manage Orders", command=lambda: self.on_order_button_clicked())
-        self.order_button.pack()
+        self.order_button.pack(side = "top", fill = "x", pady=20)
 
         self.inventory_button = ctk.CTkButton(self, text="View Inventory", command=lambda: self.on_inventory_button_clicked())
-        self.inventory_button.pack()
+        self.inventory_button.pack(side = "top", fill = "x", pady=20)
 
         self.edit_sku_button = ctk.CTkButton(self, text="Edit SKU", command=lambda: self.on_edit_sku_button_clicked())
-        self.edit_sku_button.pack()
 
         self.check_report_button = ctk.CTkButton(self, text = "View Today's Report", command=lambda: self.on_report_button_clicked())
+        self.check_report_button.pack(side = "top", fill = "x", pady=20)
 
         self.return_button = ctk.CTkButton(self, text="Return to Menu", command=lambda: self.on_return_button_clicked())
-        self.return_button.pack()
+        self.return_button.pack(side = "top", fill = "x", pady=20)
 
     def on_return_button_clicked(self):
         self.parent.show_frame("MainFrame")
@@ -53,7 +51,7 @@ class UserFrame(ctk.CTkFrame):
     def show_edit_sku(self):
         if self.parent.get_user_admin():
             print(self.parent.get_user_admin())
-            self.edit_sku_button.pack()
+            self.edit_sku_button.pack(side = "top", fill = "x", pady=20)
         else:
             print(self.parent.get_user_admin())
             self.edit_sku_button.pack_forget()

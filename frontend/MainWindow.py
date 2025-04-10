@@ -1,9 +1,7 @@
-from PIL import Image, ImageTk
-import tkinter as tk
+from PIL import Image
 import customtkinter as ctk
 
-from backend import FilePathing
-from frontend.CustomerView import CustomerTopLevel
+from FilePathing import resource_path
 
 
 class MainFrame(ctk.CTkFrame):
@@ -13,9 +11,9 @@ class MainFrame(ctk.CTkFrame):
         self.parent = parent
         self.configure(fg_color="#fdc30d")
 
-        self.logo = Image.open(FilePathing.resource_path("Assets/BigBoyzLogo.png"))
+        self.logo = Image.open(resource_path("Assets/BigBoyzLogo.png"))
 
-        self.logoLabel = ctk.CTkLabel(self, text = " ", image=ctk.CTkImage(self.logo, size = (500, 500)), width = 500, height = 500)
+        self.logoLabel = ctk.CTkLabel(self, text = " ", image=ctk.CTkImage(self.logo, size = (400, 400)))
         self.logoLabel.pack(padx = 10, pady = 10)
 
         self.MainLabel = ctk.CTkLabel(self, text="Project BB\nWelcome", font = self.parent.get_main_font(),

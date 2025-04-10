@@ -1,6 +1,6 @@
 import os
 
-from backend.FilePathing import resource_path
+from FilePathing import resource_path
 
 
 def register_user(user_name, user_pass):
