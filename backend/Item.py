@@ -1,7 +1,7 @@
 class SkuItem:
-    def __init__(self, name, sku, price, image, category):
+    def __init__(self, name, item_sku, price, image, category):
         self.name = name
-        self.sku = sku
+        self.item_sku = item_sku
         self.price = price
         self.image = image
         self.category = category
@@ -18,11 +18,14 @@ class SkuItem:
     def get_category(self):
         return self.category
 
+    def get_item_sku(self):
+        return self.item_sku
+
     def set_name(self, name):
         self.name = name
 
-    def set_sku(self, sku):
-        self.sku = sku
+    def set_item_sku(self, item_sku):
+        self.item_sku = item_sku
 
     def set_price(self, price):
         self.price = price

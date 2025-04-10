@@ -6,10 +6,10 @@ from CredentialsWindow import CredentialsFrame
 from MainWindow import MainFrame
 from KitchenWindow import MainKitchenFrame
 from backend.LoadItems import *
-from frontend.CustomerView import CustomerTopLevel
+from frontend.CustomerWindow import CustomerTopLevel
 from frontend.EditSKUWindow import EditSKUFrame
-from frontend.InventoryView import MainInventoryFrame
-from frontend.OrderView import OrderFrame
+from frontend.InventoryWindow import MainInventoryFrame
+from frontend.OrderWindow import OrderFrame
 from frontend.ReportWindow import ReportFrame
 from frontend.UserWindow import UserFrame
 import datetime
@@ -108,7 +108,7 @@ class MainApplication(ctk.CTk):
     def add_preparing_list(self, order):
         order_label = str(order.get_number())
         for item in order.get_order_items():
-            order_label += (" " + item.get_name())
+            order_label += (", " + item.get_name())
         self.customer_window.preparing_frame.customer_list.insert(tk.END, order_label)
         self.customer_window.preparing_orders.append(order)
         self.frames["OrderFrame"].preparing_frame.customer_list.insert(tk.END, order_label)
@@ -118,7 +118,7 @@ class MainApplication(ctk.CTk):
         print(index)
         order_label = str(order.get_number())
         for item in order.get_order_items():
-            order_label += (" " + item.get_name())
+            order_label += (", " + item.get_name())
         self.customer_window.ready_frame.customer_list.insert(tk.END, order_label)
         self.customer_window.ready_orders.append(order)
         self.frames["OrderFrame"].ready_frame.customer_list.insert(tk.END, order_label)
@@ -151,8 +151,6 @@ class MainApplication(ctk.CTk):
 
     def get_sub_font(self):
         return self.sub_font
-
-
 
 
 if __name__ == '__main__':

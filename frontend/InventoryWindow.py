@@ -1,7 +1,6 @@
 import customtkinter as ctk
-import tkinter as tk
 from PIL import Image
-from backend.FilePathing import resource_path
+from FilePathing import resource_path
 
 class MainInventoryFrame(ctk.CTkFrame):
     def __init__(self, parent):

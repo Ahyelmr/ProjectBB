@@ -1,6 +1,6 @@
 import os
 
-from backend.FilePathing import resource_path
+from FilePathing import resource_path
 from backend.Inventory import Inventory
 from backend.Item import SkuItem, InventoryItem
 from backend.Sku import Sku
@@ -29,13 +29,6 @@ def export_inventory(filename):
                 inventory.add_inventory_item(curr_item)
 
             return inventory
-"""
-def add_inventory_item(filename, item):
-    if os.path.exists(resource_path(filename)):
-        with open(filename, "a") as f:
-
-def edit_sku(filename):
-"""
 
 def create_file(filename, value):
     if not os.path.exists(filename):
@@ -54,4 +47,4 @@ def add_to_file(filename, value):
 def get_report(filename):
     if os.path.exists(filename):
         with open(filename, "r") as f:
-            f
+            report = f.readLines()

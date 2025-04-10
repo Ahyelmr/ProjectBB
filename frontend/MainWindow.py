@@ -1,9 +1,7 @@
-from PIL import Image, ImageTk
-import tkinter as tk
+from PIL import Image
 import customtkinter as ctk
 
-from backend import FilePathing
-from frontend.CustomerView import CustomerTopLevel
+import FilePathing
 
 
 class MainFrame(ctk.CTkFrame):

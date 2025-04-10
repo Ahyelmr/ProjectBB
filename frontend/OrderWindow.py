@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from frontend.CustomerView import OrdersFrame
+from frontend.CustomerWindow import OrdersFrame
 
 class OrderFrame(ctk.CTkFrame):
     def __init__(self, parent):

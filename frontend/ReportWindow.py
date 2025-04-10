@@ -6,3 +6,8 @@ class ReportFrame(ctk.CTkFrame):
         self.parent = parent
         self.report_label = ctk.CTkLabel(self, text="View Report")
         self.report_label.pack(side="top", fill="x")
+
+class ReportItemsFrame(ctk.CTkScrollableFrame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.parent = parent

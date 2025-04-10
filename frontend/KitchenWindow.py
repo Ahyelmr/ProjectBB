@@ -1,7 +1,7 @@
 import tkinter as tk
 import customtkinter as ctk
 from PIL import Image
-from backend.FilePathing import resource_path
+from FilePathing import resource_path
 from backend.Order import Order
 
 class MainKitchenFrame(ctk.CTkFrame):
@@ -104,9 +104,6 @@ class OptionsFrame(ctk.CTkFrame):
         order_confirmation = OrderTopLevel(self, order)
         order_confirmation.deiconify()
 
-        #if order_confirmation.get_confirm_purchase():
-
-
     def sort_order_click(self):
         category = self.category_order.get()
         sort = self.sort_order.get()
@@ -170,7 +167,6 @@ class OrderTopLevel(ctk.CTkToplevel):
         self.focus_force()
         self.attributes("-topmost", True)
 
-
         self.total = self.order.get_total_price()
         self.confirm_purchase = None
         self.confirm_text = ctk.CTkLabel(self, text = "Confirm Purchase", font=("Helvetica", 18, "bold"))
@@ -180,8 +176,9 @@ class OrderTopLevel(ctk.CTkToplevel):
         self.amount_entry = ctk.CTkEntry(self, placeholder_text="Amount")
         self.amount_entry.pack(side = "top", fill = "x")
         self.change_label = ctk.CTkLabel(self)
-        self.confirm_button = ctk.CTkButton(self, text = "confirm", command=lambda: self.on_confirm_button_click())
+        self.confirm_button = ctk.CTkButton(self, text = "Confirm", command=lambda: self.on_confirm_button_click())
         self.confirm_button.pack(side = "top", fill = "x")
+        self.delete_button = ctk.CTkButton(self, text = "Cancel Order",  command=lambda:self.on_delete_order_button_click())
         self.destroy_button = ctk.CTkButton(self, command=self.destroy)
 
     def on_confirm_button_click(self):
@@ -200,6 +197,11 @@ class OrderTopLevel(ctk.CTkToplevel):
             self.parent.parent.parent.add_number()
             self.parent.parent.parent.add_preparing_list(self.order)
             self.parent.order_list.delete(0, tk.END)
+
+    def on_delete_order_button_click(self):
+        self.parent.order_list.delete(0, tk.END)
+        self.set_confirm_purchase(False)
+        self.destroy()
 
     def set_confirm_purchase(self, value):
         self.confirm_purchase = value
