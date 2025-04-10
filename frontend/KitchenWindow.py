@@ -104,10 +104,8 @@ class OptionsFrame(ctk.CTkFrame):
         order_confirmation = OrderTopLevel(self, order)
         order_confirmation.deiconify()
 
-        if order_confirmation.get_confirm_purchase():
-            self.parent.parent.add_number()
-            self.parent.parent.add_preparing_list(order)
-            self.order_list.delete(0, tk.END)
+        #if order_confirmation.get_confirm_purchase():
+
 
     def sort_order_click(self):
         category = self.category_order.get()
@@ -156,9 +154,24 @@ class ItemFrame(ctk.CTkFrame):
 class OrderTopLevel(ctk.CTkToplevel):
     def __init__(self, parent, order):
         super().__init__(parent)
-        self.configure(title="Confirm Purchase")
-        self.geometry("200x150")
-        self.total = order.get_total_price()
+        self.title("Confirm Purchase")
+        self.resizable(False, False)
+        self.geometry("200x200")
+        self.update_idletasks()
+        width = self.winfo_width()
+        height = self.winfo_height()
+        self.parent = parent
+        self.order = order
+
+        x = (self.winfo_screenwidth() // 2) - (width // 2)
+        y = (self.winfo_screenheight() // 2) - (height // 2)
+        self.geometry(f"{width}x{height}+{x}+{y}")
+        self.lift()
+        self.focus_force()
+        self.attributes("-topmost", True)
+
+
+        self.total = self.order.get_total_price()
         self.confirm_purchase = None
         self.confirm_text = ctk.CTkLabel(self, text = "Confirm Purchase", font=("Helvetica", 18, "bold"))
         self.confirm_text.pack(side = "top", fill = "x")
@@ -169,19 +182,24 @@ class OrderTopLevel(ctk.CTkToplevel):
         self.change_label = ctk.CTkLabel(self)
         self.confirm_button = ctk.CTkButton(self, text = "confirm", command=lambda: self.on_confirm_button_click())
         self.confirm_button.pack(side = "top", fill = "x")
-        sel
+        self.destroy_button = ctk.CTkButton(self, command=self.destroy)
 
     def on_confirm_button_click(self):
-        amount = self.amount_entry.get()
+        amount = float(self.amount_entry.get())
         if amount < self.total:
-            self.change_label.config(text = "Not enough")
+            self.change_label.configure(text = "Not enough amount")
             self.change_label.pack(side = "top", fill = "x")
             self.set_confirm_purchase(False)
         if amount > self.total:
-            change = self.total - amount
-            self.change_label.config(text = "Change: " + str(change))
+            change = amount - self.total
+            self.change_label.configure(text = "Change: " + str(change))
             self.change_label.pack(side = "top", fill = "x")
+            self.destroy_button.configure(text = "Confirm Purchase")
+            self.destroy_button.pack(side = "top", fill = "x")
             self.set_confirm_purchase(True)
+            self.parent.parent.parent.add_number()
+            self.parent.parent.parent.add_preparing_list(self.order)
+            self.parent.order_list.delete(0, tk.END)
 
     def set_confirm_purchase(self, value):
         self.confirm_purchase = value

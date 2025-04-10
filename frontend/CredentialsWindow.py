@@ -4,7 +4,7 @@ from backend.Authentication import *
 
 
 def open_confirmation_window(label):
-    confirm_box = tk.Toplevel()
+    confirm_box = ctk.CTkToplevel()
     confirm_box.title("Log In")
     confirm_box.resizable(False, False)
     confirm_box.geometry("200x150")
@@ -15,13 +15,14 @@ def open_confirmation_window(label):
     x = (confirm_box.winfo_screenwidth() // 2) - (width // 2)
     y = (confirm_box.winfo_screenheight() // 2) - (height // 2)
     confirm_box.geometry(f"{width}x{height}+{x}+{y}")
-    confirm_box.focus_force()
     confirm_box.lift()
+    confirm_box.focus_force()
+    confirm_box.attributes("-topmost", True)
 
-    confirm_login = tk.Label(confirm_box, text=label)
+    confirm_login = ctk.CTkLabel(confirm_box, text=label)
     confirm_login.pack(expand=True)
 
-    confirm_button = tk.Button(confirm_box, text="Confirm", command=confirm_box.destroy)
+    confirm_button = ctk.CTkButton(confirm_box, text="Confirm", command=confirm_box.destroy)
     confirm_button.pack(expand=True)
 
 

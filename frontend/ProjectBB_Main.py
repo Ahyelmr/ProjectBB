@@ -10,7 +10,9 @@ from frontend.CustomerView import CustomerTopLevel
 from frontend.EditSKUWindow import EditSKUFrame
 from frontend.InventoryView import MainInventoryFrame
 from frontend.OrderView import OrderFrame
+from frontend.ReportWindow import ReportFrame
 from frontend.UserWindow import UserFrame
+import datetime
 
 def main():
     app = MainApplication()
@@ -19,11 +21,13 @@ def main():
 class MainApplication(ctk.CTk):
     def __init__(self):
         super().__init__()
+        self.daily_report_file = "Records/" + str(datetime.datetime.now().strftime("%Y_%m_%d")) + ".txt"
+        print(self.daily_report_file)
+        create_file(resource_path(self.daily_report_file), str(datetime.datetime.now().strftime("%Y_%m_%d")))
         self._set_appearance_mode("dark")
         self.title("ProjectBB")
         self.maxsize(1920, 1080)
         self.geometry("1444x900")
-
 
         self.order_number = 1
         self.user = ""
@@ -42,7 +46,8 @@ class MainApplication(ctk.CTk):
 
         self.frames = {}
 
-        for F in (MainFrame, CredentialsFrame, MainKitchenFrame, UserFrame, MainInventoryFrame, OrderFrame, EditSKUFrame):
+        for F in (MainFrame, CredentialsFrame, MainKitchenFrame, UserFrame,
+                  MainInventoryFrame, OrderFrame, EditSKUFrame, ReportFrame):
             frame = F(self)
             self.frames[F.__name__] = frame
 
@@ -110,14 +115,30 @@ class MainApplication(ctk.CTk):
         self.frames["OrderFrame"].preparing_orders.append(order)
 
     def add_ready_list(self, order, index):
-        self.customer_window.ready_frame.customer_list.insert(tk.END, order)
-        self.frames["OrderFrame"].ready_frame.customer_list.insert(tk.END, order)
-        self.frames["OrderFrame"].ready_orders.append(order)
+        print(index)
+        order_label = str(order.get_number())
+        for item in order.get_order_items():
+            order_label += (" " + item.get_name())
+        self.customer_window.ready_frame.customer_list.insert(tk.END, order_label)
         self.customer_window.ready_orders.append(order)
+        self.frames["OrderFrame"].ready_frame.customer_list.insert(tk.END, order_label)
+        self.frames["OrderFrame"].ready_orders.append(order)
+
         self.customer_window.preparing_frame.customer_list.delete(index)
-        self.customer_window.preparing_orders.pop(index)
-        self.frames["OrderFrame"].preparing_orders.pop(index)
+        self.customer_window.preparing_orders.remove(order)
+        self.frames["OrderFrame"].preparing_orders.remove(order)
         self.frames["OrderFrame"].preparing_frame.customer_list.delete(index)
+
+    def add_order_report(self, order, index):
+        order_label = str(order.get_number())
+        for item in order.get_order_items():
+            order_label += (" " + item.get_name())
+        add_to_file(resource_path(self.daily_report_file), order_label)
+        self.customer_window.ready_frame.customer_list.delete(index)
+        self.customer_window.ready_orders.remove(order)
+        self.frames["OrderFrame"].ready_frame.customer_list.delete(index)
+        self.frames["OrderFrame"].ready_orders.remove(order)
+
 
     def get_inventory(self):
         return self.inventory
@@ -130,6 +151,9 @@ class MainApplication(ctk.CTk):
 
     def get_sub_font(self):
         return self.sub_font
+
+
+
 
 if __name__ == '__main__':
     main()

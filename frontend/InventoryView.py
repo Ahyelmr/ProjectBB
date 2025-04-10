@@ -11,9 +11,16 @@ class MainInventoryFrame(ctk.CTkFrame):
         self.grid_columnconfigure(0, weight = 1)
         self.inventory_frame = InventoryItemsFrame(self)
         self.inventory_label = ctk.CTkLabel(self, text = "Inventory Management")
+        self.grid(row = 0, column = 0, sticky = "nsew")
 
-        self.inventory_frame.grid(row=0, column=0, sticky="nsew")
+        self.return_button = ctk.CTkButton(self, text = "Return", command=lambda: self.on_return_button_clicked())
+        self.return_button.grid(row = 0, column = 1, sticky = "nsew")
+
+        self.inventory_frame.grid(row=1, column=0, sticky="nsew", columnspan = 2)
         self.inventory_frame.set_inventory_frames(self.parent.get_inventory().get_inventory_items())
+
+    def on_return_button_clicked(self):
+        self.parent.show_frame("UserFrame")
 
 
 class InventoryItemsFrame(ctk.CTkScrollableFrame):
@@ -63,4 +70,4 @@ class InventoryFrame(ctk.CTkFrame):
         amount = int(self.item_field.get())
         inventory_item = self.parent.parent.parent.get_inventory().get_inventory_item(self.item_name.cget("text"))
         inventory_item.set_inventory_amount(amount)
-        self.item_amount.configure(text = (str(amount) + " Pc.s"))
+        self.item_amount.configure(text = (str(amount) + " Pcs."))
