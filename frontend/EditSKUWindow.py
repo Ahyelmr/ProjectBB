@@ -49,6 +49,9 @@ class EditOptionsFrame(ctk.CTkFrame):
         self.search_label = ctk.CTkLabel(self, text = " ")
         self.search_label.pack(side="top", fill="x", pady=5)
 
+        self.return_button = ctk.CTkButton(self, text = "Return", command=lambda:self.parent.parent.show_frame("UserFrame"))
+        self.return_button.pack(side="top", fill="x", pady=10)
+
     def on_add_button_clicked(self):
         self.parent.show_edit_item_frame()
         self.configure_search_label(True)

@@ -8,9 +8,10 @@ class MainInventoryFrame(ctk.CTkFrame):
         self.parent = parent
         self.grid_rowconfigure(0, weight = 1)
         self.grid_columnconfigure(0, weight = 1)
+        self.grid_rowconfigure(1, weight = 3)
         self.inventory_frame = InventoryItemsFrame(self)
         self.inventory_label = ctk.CTkLabel(self, text = "Inventory Management")
-        self.grid(row = 0, column = 0, sticky = "nsew")
+        self.inventory_label.grid(row = 0, column = 0, sticky = "nsew")
 
         self.return_button = ctk.CTkButton(self, text = "Return", command=lambda: self.on_return_button_clicked())
         self.return_button.grid(row = 0, column = 1, sticky = "nsew")
