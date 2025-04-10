@@ -110,13 +110,18 @@ class MainApplication(ctk.CTk):
         self.frames["OrderFrame"].preparing_orders.append(order)
 
     def add_ready_list(self, order, index):
-        self.customer_window.ready_frame.customer_list.insert(tk.END, order)
-        self.frames["OrderFrame"].ready_frame.customer_list.insert(tk.END, order)
+        print(index)
+        order_label = str(order.get_number())
+        for item in order.get_order_items():
+            order_label += (" " + item.get_name())
+        self.customer_window.ready_frame.customer_list.insert(tk.END, order_label)
+        self.frames["OrderFrame"].ready_frame.customer_list.insert(tk.END, order_label)
         self.frames["OrderFrame"].ready_orders.append(order)
         self.customer_window.ready_orders.append(order)
         self.customer_window.preparing_frame.customer_list.delete(index)
         self.customer_window.preparing_orders.pop(index)
-        self.frames["OrderFrame"].preparing_orders.pop(index)
+        del self.customer_window.ready_orders[index]
+        del self.frames["OrderFrame"].preparing_orders[index]
         self.frames["OrderFrame"].preparing_frame.customer_list.delete(index)
 
     def get_inventory(self):
