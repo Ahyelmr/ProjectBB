@@ -42,7 +42,6 @@ class MainApplication(ctk.CTk):
         self.grid_rowconfigure(0, weight=1)
 
         self.customer_window = CustomerTopLevel(self)
-        self.customer_window.withdraw()
 
         self.frames = {}
 
@@ -68,7 +67,6 @@ class MainApplication(ctk.CTk):
         if page == "UserFrame":
             frame.set_user_label()
             frame.show_edit_sku()
-            self.customer_window.deiconify()
 
         if page == "ReportFrame":
             frame.report_frame.set_report_frames()
