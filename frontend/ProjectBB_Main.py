@@ -70,6 +70,9 @@ class MainApplication(ctk.CTk):
             frame.show_edit_sku()
             self.customer_window.deiconify()
 
+        if page == "ReportFrame":
+            frame.report_frame.set_report_frames()
+
     def get_login(self):
         return self.login
 

@@ -23,8 +23,8 @@ class OrdersFrame(ctk.CTkFrame):
         super().__init__(parent)
         self.parent = parent
 
-        self.label = ctk.CTkLabel(self, text = name, font= ("Helvetica", 16, "bold"))
+        self.label = ctk.CTkLabel(self, text = name, font= ("Helvetica", 30, "bold"))
         self.label.pack(side="top", fill="x")
 
-        self.customer_list = tk.Listbox(self, font= ("Helvetica", 16, "bold"))
+        self.customer_list = tk.Listbox(self, font= ("Helvetica", 30, "bold"))
         self.customer_list.pack(side="top", expand = True, fill="both")
