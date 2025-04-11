@@ -7,6 +7,7 @@ from backend.Order import Order
 class MainKitchenFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
+        self.configure(fg_color="#fdc30d")
         self.parent = parent
         self.options_frame = OptionsFrame(self)
         self.kitchen_frame = KitchenFrame(self, self.parent.get_sku().get_items())
@@ -29,7 +30,7 @@ class MainKitchenFrame(ctk.CTkFrame):
 class KitchenFrame(ctk.CTkScrollableFrame):
     def __init__(self, parent, items):
         super().__init__(parent)
-
+        self.configure(fg_color="#fdc30d")
         self.parent = parent
 
         self.set_item_frames(items)
@@ -56,36 +57,42 @@ class KitchenFrame(ctk.CTkScrollableFrame):
 class OptionsFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
-
+        self.configure(fg_color="#fdc30d")
         self.parent = parent
 
-        self.text_box = ctk.CTkLabel(self, text="Kitchen")
+        self.text_box = ctk.CTkLabel(self, text="Kitchen View", font = self.parent.parent.get_main_font())
         self.text_box.pack(side="top", fill="x", pady=10)
 
         self.organize_frame = ctk.CTkFrame(self)
         self.organize_frame.pack(side="top", fill="x", pady = 10)
 
-        self.category_order = ctk.CTkComboBox(self.organize_frame, values=self.parent.parent.get_sku().get_categories())
+        self.category_order = ctk.CTkComboBox(self.organize_frame, values=self.parent.parent.get_sku().get_categories(),
+                                              font = self.parent.parent.get_sub_font())
         self.category_order.pack(fill="x", pady=10)
         self.category_order.set("Category")
 
-        self.sort_order = ctk.CTkComboBox(self.organize_frame, values=["Name (Ascending)", "Name (Descending)", "Price (Ascending)",  "Price (Descending)"])
+        self.sort_order = ctk.CTkComboBox(self.organize_frame, values=["Name (Ascending)", "Name (Descending)", "Price (Ascending)",  "Price (Descending)"],
+                                          font = self.parent.parent.get_sub_font())
         self.sort_order.pack(fill="x", pady=10)
         self.sort_order.set("Order")
 
-        self.sort_button = ctk.CTkButton(self.organize_frame, text="Sort", command=lambda: self.sort_order_click())
+        self.sort_button = ctk.CTkButton(self.organize_frame, text="Sort", command=lambda: self.sort_order_click(),
+                                         font = self.parent.parent.get_main_font())
         self.sort_button.pack(side="bottom", fill="x", pady=10)
 
         self.order_list = tk.Listbox(self, font= ("Helvetica", 16, "bold"))
         self.order_list.pack(side = "top", expand=True, fill = "both", pady = 10)
 
-        self.confirm_order_button = ctk.CTkButton(self, text="Confirm Order", command=lambda: self.confirm_order_click())
+        self.confirm_order_button = ctk.CTkButton(self, text="Confirm Order", command=lambda: self.confirm_order_click(),
+                                                  font = self.parent.parent.get_main_font())
         self.confirm_order_button.pack(side = "top", expand=True, fill = "x", pady = 10)
 
-        self.return_button = ctk.CTkButton(self, text="Return", command=lambda: self.return_button_click())
+        self.return_button = ctk.CTkButton(self, text="Return", command=lambda: self.return_button_click(),
+                                           font = self.parent.parent.get_main_font())
         self.return_button.pack(side="top", fill="x", pady=10)
 
     def return_button_click(self):
+
         self.parent.parent.show_frame("UserFrame")
 
     def add_to_list(self, name, price):
@@ -136,13 +143,14 @@ class ItemFrame(ctk.CTkFrame):
         self.item_image_label = ctk.CTkLabel(self, text = " ", image = ctk.CTkImage(self.item_image, size = (200, 200)), width = 200, height = 200)
         self.item_image_label.grid(row = 0, column = 0, sticky = "nsew")
 
-        self.item_name = ctk.CTkLabel(self, text = item.get_name())
+        self.item_name = ctk.CTkLabel(self, text = item.get_name(), font = self.parent.parent.parent.get_sub_font())
         self.item_name.grid(row = 1, column = 0, sticky = "nsew")
 
-        self.item_price = ctk.CTkLabel(self, text = item.get_price())
+        self.item_price = ctk.CTkLabel(self, text = item.get_price(), font = self.parent.parent.parent.get_sub_font())
         self.item_price.grid(row = 2, column = 0, sticky = "nsew")
 
-        self.item_button = ctk.CTkButton(self, text = "Add", command=lambda: self.add_button_click(item))
+        self.item_button = ctk.CTkButton(self, text = "Add", command=lambda: self.add_button_click(item),
+                                         font = self.parent.parent.parent.get_sub_font())
         self.item_button.grid(row = 3, column = 0, sticky = "nsew")
 
     def add_button_click(self, item):
@@ -153,10 +161,9 @@ class OrderTopLevel(ctk.CTkToplevel):
         super().__init__(parent)
         self.title("Confirm Purchase")
         self.resizable(False, False)
-        self.geometry("200x200")
         self.update_idletasks()
-        width = self.winfo_width()
-        height = self.winfo_height()
+        width = 300
+        height = 200
         self.parent = parent
         self.order = order
 
@@ -169,31 +176,33 @@ class OrderTopLevel(ctk.CTkToplevel):
 
         self.total = self.order.get_total_price()
         self.confirm_purchase = None
-        self.confirm_text = ctk.CTkLabel(self, text = "Confirm Purchase", font=("Helvetica", 18, "bold"))
+        self.confirm_text = ctk.CTkLabel(self, text = "Confirm Purchase", font = self.parent.parent.parent.get_sub_font())
         self.confirm_text.pack(side = "top", fill = "x")
-        self.total_label = ctk.CTkLabel(self, text = ("Total: " + str(self.total)))
+        self.total_label = ctk.CTkLabel(self, text = ("Total: " + str(self.total)), font = self.parent.parent.parent.get_sub_font())
         self.total_label.pack(side = "top", fill = "x")
-        self.amount_entry = ctk.CTkEntry(self, placeholder_text="Amount")
+        self.amount_entry = ctk.CTkEntry(self, placeholder_text="Amount", font = self.parent.parent.parent.get_sub_font())
         self.amount_entry.pack(side = "top", fill = "x")
         self.change_label = ctk.CTkLabel(self)
-        self.confirm_button = ctk.CTkButton(self, text = "Confirm", command=lambda: self.on_confirm_button_click())
+        self.confirm_button = ctk.CTkButton(self, text = "Confirm", command=lambda: self.on_confirm_button_click(),
+                                            font = self.parent.parent.parent.get_sub_font())
         self.confirm_button.pack(side = "top", fill = "x")
-        self.delete_button = ctk.CTkButton(self, text = "Cancel Order",  command=lambda:self.on_delete_order_button_click())
+        self.delete_button = ctk.CTkButton(self, text = "Cancel Order",  command=lambda:self.on_delete_order_button_click(),
+                                           font = self.parent.parent.parent.get_sub_font())
         self.delete_button.pack(side="top", fill = "x")
         self.destroy_button = ctk.CTkButton(self, command=self.destroy)
 
     def on_confirm_button_click(self):
         amount = float(self.amount_entry.get())
         if amount < self.total:
-            self.change_label.configure(text = "Not enough amount")
+            self.change_label.configure(text = "Not enough amount", font = self.parent.parent.parent.get_sub_font())
             self.change_label.pack(side = "top", fill = "x")
             self.set_confirm_purchase(False)
         if amount > self.total:
             self.delete_button.forget()
             change = amount - self.total
-            self.change_label.configure(text = "Change: " + f"{change:.2f}")
+            self.change_label.configure(text = "Change: " + f"{change:.2f}", font = self.parent.parent.parent.get_sub_font())
             self.change_label.pack(side = "top", fill = "x")
-            self.destroy_button.configure(text = "Confirm Purchase")
+            self.destroy_button.configure(text = "Confirm Purchase", font = self.parent.parent.parent.get_sub_font())
             self.destroy_button.pack(side = "top", fill = "x")
             self.set_confirm_purchase(True)
             self.parent.parent.parent.add_number()
@@ -210,4 +219,3 @@ class OrderTopLevel(ctk.CTkToplevel):
 
     def get_confirm_purchase(self):
         return self.confirm_purchase
-

@@ -60,7 +60,7 @@ class CredentialsFrame(ctk.CTkFrame):
         self.returnButton = ctk.CTkButton(self, text="Return", command=lambda: self.on_return_button_clicked(),
                                           font=self.parent.get_main_font())
 
-        self.verifyLabel = ctk.CTkLabel(self, text=" ", font=self.parent.get_main_font())
+        self.verifyLabel = ctk.CTkLabel(self, text = " ")
         self.verifyLabel.grid(row=7, column=0, pady=10, sticky="ns")
 
         self.returnButton.grid(row=8, column=0, pady=10, sticky="w", padx=15)
@@ -86,18 +86,17 @@ class CredentialsFrame(ctk.CTkFrame):
                 self.after(100, self.parent.show_frame("UserFrame"))
 
             else:
-                self.set_verify_label("Invalid username or password!")
+                self.verifyLabel.configure(text = "Invalid username or password!", font=self.parent.get_main_font())
 
         else:
             if register_user(username, password):
-                self.set_verify_label("You have registered successfully!")
                 open_confirmation_window("Successfully Registered!", self.parent.get_main_font())
                 self.usernameEntry.delete(0, "end")
                 self.passwordEntry.delete(0, "end")
-                self.verifyLabel.forget()
+                self.verifyLabel.configure(text = " ", font=self.parent.get_main_font())
                 self.after(100, self.parent.show_frame("MainFrame"))
             else:
-                self.set_verify_label("User has already been registered!")
+                self.verifyLabel.configure(text="User has already been registered!", font=self.parent.get_main_font())
 
     def on_return_button_clicked(self):
         self.usernameEntry.delete(0, "end")
@@ -106,6 +105,7 @@ class CredentialsFrame(ctk.CTkFrame):
 
     def set_credentials_label(self):
         credentials = self.parent.get_login()
+        self.verifyLabel.configure(text = " ", font=self.parent.get_main_font())
         print(f"Inside set_credentials_label, login state: {credentials}")
         if credentials:
             self.credentialsLabel.configure(text="Log In", font=self.parent.get_main_font())
