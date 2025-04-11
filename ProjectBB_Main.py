@@ -102,9 +102,9 @@ class MainApplication(ctk.CTk):
         self.user_admin = user_admin
 
     def add_preparing_list(self, order):
-        order_label = str(order.get_number())
-        for item in order.get_order_items():
-            order_label += (", " + item.get_name())
+        order_label = "#" + str(order.get_number())
+        #for item in order.get_order_items():
+            #order_label += (", " + item.get_name())
         self.customer_window.preparing_frame.customer_list.insert(tk.END, order_label)
         self.customer_window.preparing_orders.append(order)
         self.frames["OrderFrame"].preparing_frame.customer_list.insert(tk.END, order_label)
@@ -112,9 +112,9 @@ class MainApplication(ctk.CTk):
 
     def add_ready_list(self, order, index):
         print(index)
-        order_label = str(order.get_number())
-        for item in order.get_order_items():
-            order_label += (", " + item.get_name())
+        order_label = "#" + str(order.get_number())
+        #for item in order.get_order_items():
+           # order_label += (", " + item.get_name())
         self.customer_window.ready_frame.customer_list.insert(tk.END, order_label)
         self.customer_window.ready_orders.append(order)
         self.frames["OrderFrame"].ready_frame.customer_list.insert(tk.END, order_label)

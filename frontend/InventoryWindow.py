@@ -58,7 +58,7 @@ class InventoryFrame(ctk.CTkFrame):
         self.item_name = ctk.CTkLabel(self, text = item.get_inventory_name(), font = self.parent.parent.parent.get_sub_font())
         self.item_name.grid(row = 1, column = 0, sticky = "nsew")
 
-        self.item_amount = ctk.CTkLabel(self, text = (item.get_inventory_amount() + " Pcs."), font = self.parent.parent.parent.get_sub_font())
+        self.item_amount = ctk.CTkLabel(self, text = (item. get_inventory_amount() + " Pcs."), font = self.parent.parent.parent.get_sub_font())
         self.item_amount.grid(row = 2, column = 0, sticky = "nsew")
 
         self.item_field = ctk.CTkEntry(self, placeholder_text="Change Amount", font = self.parent.parent.parent.get_sub_font())

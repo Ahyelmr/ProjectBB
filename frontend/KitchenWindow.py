@@ -42,9 +42,9 @@ class KitchenFrame(ctk.CTkScrollableFrame):
         k = 0
         for i in range(rows):
             for j in range(cols):
-                self.grid_rowconfigure(i, weight=1)
-                self.grid_columnconfigure(j, weight=1)
                 if k < size:
+                    self.grid_rowconfigure(i, weight=1)
+                    self.grid_columnconfigure(j, weight=1)
                     item = items[k]
                     item_frame = ItemFrame(self, item)
                     item_frame.grid_rowconfigure(i, weight=1)
@@ -152,6 +152,11 @@ class ItemFrame(ctk.CTkFrame):
         self.item_button = ctk.CTkButton(self, text = "Add", command=lambda: self.add_button_click(item),
                                          font = self.parent.parent.parent.get_sub_font())
         self.item_button.grid(row = 3, column = 0, sticky = "nsew")
+
+        for i in range(3):
+            self.grid_rowconfigure(i, weight = 1)
+
+        self.grid_columnconfigure(0, weight=1)
 
     def add_button_click(self, item):
         self.parent.parent.add_order(item)
