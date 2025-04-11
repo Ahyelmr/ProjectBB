@@ -48,6 +48,7 @@ class ReportItemsFrame(ctk.CTkScrollableFrame):
                     order = report[k].strip().split(", ", 1)
                     print(order)
                     print(order[0])
+                    print(order[1])
 
                     report_frame = ReportItem(self, order)
                     report_frame.grid(row = i, column = j, sticky = "nsew")
@@ -60,8 +61,13 @@ class ReportItem(ctk.CTkFrame):
         super().__init__(parent)
         self.parent = parent
 
-        self.order_label = ctk.CTkLabel(self, text="Order Number: " + order[0], font = self.parent.parent.parent.get_sub_font())
+        self.order_label = ctk.CTkLabel(self, text="Order Number: " + order[0], font = self.parent.parent.parent.get_main_font())
         self.order_label.grid(row = 0, column = 0, sticky = "ns")
 
-        self.item_label = ctk.CTkLabel(self, text="Items: " + order[1], font = self.parent.parent.parent.get_sub_font())
+        item_orders = ""
+        items = order[1].split(",")
+        print(items)
+        for i in items:
+            item_orders += i + "\n"
+        self.item_label = ctk.CTkLabel(self, text="Items: " + item_orders, font = self.parent.parent.parent.get_main_font())
         self.item_label.grid(row = 1, column = 0, sticky = "ns")
