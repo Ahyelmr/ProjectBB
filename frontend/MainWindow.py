@@ -3,7 +3,6 @@ import customtkinter as ctk
 
 from FilePathing import resource_path
 
-
 class MainFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
