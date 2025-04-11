@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import font
 
 import customtkinter as ctk
-from CredentialsWindow import CredentialsFrame
-from MainWindow import MainFrame
-from KitchenWindow import MainKitchenFrame
+from frontend.CredentialsWindow import CredentialsFrame
+from frontend.MainWindow import MainFrame
+from frontend.KitchenWindow import MainKitchenFrame
 from backend.LoadItems import *
 from frontend.CustomerWindow import CustomerTopLevel
 from frontend.EditSKUWindow import EditSKUFrame
@@ -90,11 +90,6 @@ class MainApplication(ctk.CTk):
 
     def add_number(self):
         self.order_number += 1
-
-    def print_skus(self):
-        items = self.sku.get_items()
-        for item in items:
-            print(item.get_name())
 
     def get_user(self):
         return self.user

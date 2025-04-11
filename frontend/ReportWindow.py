@@ -37,7 +37,7 @@ class ReportItemsFrame(ctk.CTkScrollableFrame):
     def set_report_frames(self):
         report = get_report(resource_path("Records/" + str(datetime.datetime.now().strftime("%Y_%m_%d")) + ".txt"))
         size = len(report)
-        cols = 5
+        cols = 3
         rows = (size + cols - 1) // cols
         k = 1
         for i in range(rows):
