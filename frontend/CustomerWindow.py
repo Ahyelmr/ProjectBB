@@ -1,8 +1,16 @@
+"""
+CustomerWindow.py
+
+This is the customer top level window which shows all the current orders
+being prepared and orders that are ready for pikcup
+"""
+
 import tkinter as tk
 import customtkinter as ctk
 
+# This is the class that shows the customer view window
 class CustomerTopLevel(ctk.CTkToplevel):
-    def __init__(self, parent):
+    def __init__(self, parent): # Initilaizes class with elements
         super().__init__(parent)
         self.parent = parent
         self.geometry("720x900")
@@ -18,8 +26,9 @@ class CustomerTopLevel(ctk.CTkToplevel):
         self.ready_frame = OrdersFrame(self.overall_frame, "Orders Ready")
         self.ready_frame.pack(side="right", expand=True, fill="both")
 
+# This is the frame inside the customer top level which shows the orders
 class OrdersFrame(ctk.CTkFrame):
-    def __init__(self, parent, name):
+    def __init__(self, parent, name): # Initializes class with elements
         super().__init__(parent)
         self.parent = parent
 

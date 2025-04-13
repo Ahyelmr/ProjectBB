@@ -1,9 +1,16 @@
+"""
+InventoryWindow.py
+
+This file is responsible for handling the current inventory in the system.
+"""
+
 import customtkinter as ctk
 from PIL import Image
 from FilePathing import resource_path
 
+# This is the main inventory frame that contains all other sub frames and their functions
 class MainInventoryFrame(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent): # Initializes class with elements
         super().__init__(parent)
         self.parent = parent
         self.grid_rowconfigure(0, weight = 1)
@@ -20,15 +27,17 @@ class MainInventoryFrame(ctk.CTkFrame):
         self.inventory_frame.grid(row=1, column=0, sticky="nsew", columnspan = 2)
         self.inventory_frame.set_inventory_frames(self.parent.get_inventory().get_inventory_items())
 
+    # Returns to the user window frame
     def on_return_button_clicked(self):
         self.parent.show_frame("UserFrame")
 
-
+# This is the class which contains the items in the inventory of the system
 class InventoryItemsFrame(ctk.CTkScrollableFrame):
-    def __init__(self, parent):
+    def __init__(self, parent): # Initializes class with elements
         super().__init__(parent)
         self.parent = parent
 
+    # Sets the inventory frames from the inventory in the system
     def set_inventory_frames(self, items):
         size = len(items)
         cols = 7
@@ -46,8 +55,9 @@ class InventoryItemsFrame(ctk.CTkScrollableFrame):
                 else:
                     break
 
+# This is the individual frame that contains an item from the inventory
 class InventoryFrame(ctk.CTkFrame):
-    def __init__(self, parent, item):
+    def __init__(self, parent, item): # Initializes class with elements
         super().__init__(parent)
         self.parent = parent
 
@@ -67,6 +77,7 @@ class InventoryFrame(ctk.CTkFrame):
         self.set_amount_button = ctk.CTkButton(self, text = "Set Amount", command=lambda: self.on_set_amount_button_click(), font = self.parent.parent.parent.get_sub_font())
         self.set_amount_button.grid(row = 4, column = 0, sticky = "nsew")
 
+    # Sets the current amount of the inventory item
     def on_set_amount_button_click(self):
         amount = int(self.item_field.get())
         inventory_item = self.parent.parent.parent.get_inventory().get_inventory_item(self.item_name.cget("text"))

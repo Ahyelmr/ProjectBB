@@ -1,11 +1,18 @@
+"""
+KitchenWindow.py
+
+This is the kitchen window that takes in orders from a selection of SKUs.
+"""
+
 import tkinter as tk
 import customtkinter as ctk
 from PIL import Image
 from FilePathing import resource_path
 from backend.Order import Order
 
+# This is the main kitchen frame that contains sub frames to show the list of items and order functions
 class MainKitchenFrame(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent): # Initializes class with elements
         super().__init__(parent)
         self.configure(fg_color="#fdc30d")
         self.parent = parent
@@ -17,30 +24,34 @@ class MainKitchenFrame(ctk.CTkFrame):
         self.kitchen_frame.grid(row = 0, column = 0, sticky = "nsew")
         self.options_frame.grid(row = 0, column = 1, sticky = "nsew")
 
+    # Adds on order to the list of current orders
     def add_order(self, item):
         self.options_frame.add_to_list(item.get_name(), item.get_price())
         print(item.get_name() + " " + str(item.get_price()))
 
+    # Sets the list of items observable in the window
     def set_kitchen_items(self, items):
         for widget in self.kitchen_frame.winfo_children():
             widget.destroy()
         self.kitchen_frame.set_item_frames(items)
         self.kitchen_frame.grid(row = 0, column = 0, sticky = "nsew")
 
+# This is the frame that contains the items available for order
 class KitchenFrame(ctk.CTkScrollableFrame):
-    def __init__(self, parent, items):
+    def __init__(self, parent, items): # Initializes class with elements
         super().__init__(parent)
         self.configure(fg_color="#fdc30d")
         self.parent = parent
 
         self.set_item_frames(items)
 
+    # Sets the frames of each item in the SKU list of the system
     def set_item_frames(self, items):
         size = len(items)
         cols = 5
         rows = (size + cols - 1) // cols
         k = 0
-        for i in range(rows):
+        for i in range(rows): # Organizes the items in rows and columns
             for j in range(cols):
                 if k < size:
                     self.grid_rowconfigure(i, weight=1)
@@ -54,8 +65,9 @@ class KitchenFrame(ctk.CTkScrollableFrame):
                 else:
                     break
 
+# This is the frame that contains the options and functionalities for ordering items
 class OptionsFrame(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent): # Initializes class with elements
         super().__init__(parent)
         self.configure(fg_color="#fdc30d")
         self.parent = parent
@@ -91,16 +103,18 @@ class OptionsFrame(ctk.CTkFrame):
                                            font = self.parent.parent.get_main_font())
         self.return_button.pack(side="top", fill="x", pady=10)
 
+    #  Returns to the user frame
     def return_button_click(self):
-
         self.parent.parent.show_frame("UserFrame")
 
+    # Adds an item to the order
     def add_to_list(self, name, price):
         order = str(name) + ", " + str(price)
         if order:
             self.order_list.insert(tk.END, order)
             self.order_list.see(tk.END)
 
+    # Confirms the order and opens a confirmation box
     def confirm_order_click(self):
         order = Order(self.parent.parent.get_number())
         for i in range(self.order_list.size()):
@@ -111,6 +125,7 @@ class OptionsFrame(ctk.CTkFrame):
         order_confirmation = OrderTopLevel(self, order)
         order_confirmation.deiconify()
 
+    # Sorts and shows the items from the SKU list based on category and order
     def sort_order_click(self):
         category = self.category_order.get()
         sort = self.sort_order.get()
@@ -133,9 +148,9 @@ class OptionsFrame(ctk.CTkFrame):
 
         self.parent.set_kitchen_items(new_items)
 
-
+# This is the individual frame that contains the details of an item
 class ItemFrame(ctk.CTkFrame):
-    def __init__(self, parent, item):
+    def __init__(self, parent, item): # Initializes class with elements
         super().__init__(parent)
         self.parent = parent
 
@@ -158,11 +173,13 @@ class ItemFrame(ctk.CTkFrame):
 
         self.grid_columnconfigure(0, weight=1)
 
+    # Adds the item contained in the frame to the order
     def add_button_click(self, item):
         self.parent.parent.add_order(item)
 
+# This is the order confirmation top level that finalizes the purchase of the order
 class OrderTopLevel(ctk.CTkToplevel):
-    def __init__(self, parent, order):
+    def __init__(self, parent, order): # Initializes class with elements
         super().__init__(parent)
         self.title("Confirm Purchase")
         self.resizable(False, False)
@@ -196,13 +213,14 @@ class OrderTopLevel(ctk.CTkToplevel):
         self.delete_button.pack(side="top", fill = "x")
         self.destroy_button = ctk.CTkButton(self, command=self.destroy)
 
+    # Checks if the amount given is enough to complete transaction
     def on_confirm_button_click(self):
         amount = float(self.amount_entry.get())
-        if amount < self.total:
+        if amount < self.total: # Rejects the amount given
             self.change_label.configure(text = "Not enough amount", font = self.parent.parent.parent.get_sub_font())
             self.change_label.pack(side = "top", fill = "x")
             self.set_confirm_purchase(False)
-        if amount > self.total:
+        if amount >= self.total: # Accepts amount given and shows corresponding change (if any)
             self.delete_button.forget()
             change = amount - self.total
             self.change_label.configure(text = "Change: " + f"{change:.2f}", font = self.parent.parent.parent.get_sub_font())
@@ -214,13 +232,16 @@ class OrderTopLevel(ctk.CTkToplevel):
             self.parent.parent.parent.add_preparing_list(self.order)
             self.parent.order_list.delete(0, tk.END)
 
+    # Deletes the order confirmation top level
     def on_delete_order_button_click(self):
         self.parent.order_list.delete(0, tk.END)
         self.set_confirm_purchase(False)
         self.destroy()
 
+    # Sets the value of the confirmation transaction
     def set_confirm_purchase(self, value):
         self.confirm_purchase = value
 
+    # Gets the value of the confirmation transaction
     def get_confirm_purchase(self):
         return self.confirm_purchase

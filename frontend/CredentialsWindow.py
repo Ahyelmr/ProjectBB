@@ -1,9 +1,14 @@
-import tkinter as tk
+"""
+CredentialsWindow.py
+
+Provides the functions for user login and signup using custom tkinter library
+"""
+
 import customtkinter as ctk
 from backend.Authentication import *
 from PIL import Image
 
-
+#Opens a confirmation top level window to notify the user
 def open_confirmation_window(label, font):
     confirm_box = ctk.CTkToplevel()
     confirm_box.title("Log In")
@@ -25,9 +30,9 @@ def open_confirmation_window(label, font):
     confirm_button = ctk.CTkButton(confirm_box, text="Confirm", font = font, command=confirm_box.destroy)
     confirm_button.pack(expand=True, pady=10)
 
-
+# Contains the login/sign-up window elements and its included functions
 class CredentialsFrame(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent): #Initializes class with elements
         super().__init__(parent)
 
         self.parent = parent
@@ -71,12 +76,13 @@ class CredentialsFrame(ctk.CTkFrame):
             self.grid_rowconfigure(row, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
+    #Checking credentials information when clicking the enter button in the credentials window
     def on_enter_button_clicked(self):
         print(self.parent.get_login())
         username = self.usernameEntry.get()
         password = self.passwordEntry.get()
         login = self.parent.get_login()
-        if login:
+        if login: #Checks if the user is logging in an existing user or registering a new user
             if user_login(username, password):
                 open_confirmation_window("Successfully Logged In!", self.parent.get_main_font())
                 self.parent.set_user(username)
@@ -98,11 +104,13 @@ class CredentialsFrame(ctk.CTkFrame):
             else:
                 self.verifyLabel.configure(text="User has already been registered!", font=self.parent.get_main_font())
 
+    #Returns to main window
     def on_return_button_clicked(self):
         self.usernameEntry.delete(0, "end")
         self.passwordEntry.delete(0, "end")
         self.parent.show_frame("MainFrame")
 
+    #Sets the text for the credentials label
     def set_credentials_label(self):
         credentials = self.parent.get_login()
         self.verifyLabel.configure(text = " ", font=self.parent.get_main_font())

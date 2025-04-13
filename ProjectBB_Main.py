@@ -1,6 +1,10 @@
-import tkinter as tk
-from tkinter import font
+"""
+ProjectBB_Main.py
 
+This is the main file where the program is run.
+"""
+
+import tkinter as tk
 import customtkinter as ctk
 from frontend.CredentialsWindow import CredentialsFrame
 from frontend.MainWindow import MainFrame
@@ -14,12 +18,14 @@ from frontend.ReportWindow import ReportFrame
 from frontend.UserWindow import UserFrame
 import datetime
 
+# Function to run the actual application
 def main():
     app = MainApplication()
     app.mainloop()
 
+# This is the main custom tkinter CTk object which contains all other windows and frames
 class MainApplication(ctk.CTk):
-    def __init__(self):
+    def __init__(self): # Initializes class with elements
         super().__init__()
         self.daily_report_file = "Records/" + str(datetime.datetime.now().strftime("%Y_%m_%d")) + ".txt"
         print(self.daily_report_file)
@@ -45,6 +51,7 @@ class MainApplication(ctk.CTk):
 
         self.frames = {}
 
+        #Initializes different frames based on their name
         for F in (MainFrame, CredentialsFrame, MainKitchenFrame, UserFrame,
                   MainInventoryFrame, OrderFrame, EditSKUFrame, ReportFrame):
             frame = F(self)
@@ -55,52 +62,64 @@ class MainApplication(ctk.CTk):
 
         self.show_frame("MainFrame")
 
-    def show_frame(self, page):
-        frame = self.frames[page]
+    #Shows the corresponding frame based on the name given
+    def show_frame(self, name):
+        frame = self.frames[name]
         if frame:
             frame.grid(row=0, column=0, sticky="nsew")
             frame.tkraise()
 
-        if page == "CredentialsFrame":
+        if name == "CredentialsFrame":
             frame.set_credentials_label()
 
-        if page == "UserFrame":
+        if name == "UserFrame":
             frame.set_user_label()
             frame.show_edit_sku()
 
-        if page == "ReportFrame":
+        if name == "ReportFrame":
             frame.report_frame.set_report_frames()
 
+    # Gets the login Boolean value
     def get_login(self):
         return self.login
 
+    # Sets the login Boolean value
     def set_login(self, login):
         self.login = login
 
+    # Gets the whole SKU of the application
     def get_sku(self):
         return self.sku
 
+    # Sets the whole SKU of the application
     def set_sku(self, sku_inventory):
         self.sku = sku_inventory
 
+    # Gets the current order number of the system
     def get_number(self):
         return self.order_number
 
+    # Increments order number of the system
     def add_number(self):
         self.order_number += 1
 
+    # Gets the current user logged in the system
     def get_user(self):
         return self.user
 
+    # Sets the current user logged in the system
     def set_user(self, user):
         self.user = user
 
+    # Gets the Boolean value to check if current user is an admin
     def get_user_admin(self):
         return self.user_admin
 
+    # Sets the Boolean value to check if current user is an admin
     def set_user_admin(self, user_admin):
         self.user_admin = user_admin
 
+    # Adds an order to the preparing list
     def add_preparing_list(self, order):
         order_label = "#" + str(order.get_number())
         #for item in order.get_order_items():
@@ -110,6 +129,7 @@ class MainApplication(ctk.CTk):
         self.frames["OrderFrame"].preparing_frame.customer_list.insert(tk.END, order_label)
         self.frames["OrderFrame"].preparing_orders.append(order)
 
+    # Adds an order from the preparing list to the ready list
     def add_ready_list(self, order, index):
         print(index)
         order_label = "#" + str(order.get_number())
@@ -125,6 +145,7 @@ class MainApplication(ctk.CTk):
         self.frames["OrderFrame"].preparing_orders.remove(order)
         self.frames["OrderFrame"].preparing_frame.customer_list.delete(index)
 
+    # Adds an order from the ready list to the report view
     def add_order_report(self, order, index):
         order_label = str(order.get_number())
         for item in order.get_order_items():
@@ -135,19 +156,22 @@ class MainApplication(ctk.CTk):
         self.frames["OrderFrame"].ready_frame.customer_list.delete(index)
         self.frames["OrderFrame"].ready_orders.remove(order)
 
-
+    # Gets the inventory of the system
     def get_inventory(self):
         return self.inventory
 
+    # Sets the inventory of the system
     def set_inventory(self, inventory):
         self.inventory = inventory
 
+    # Gets the main font used in the elements' text
     def get_main_font(self):
         return self.main_font
 
+    # Gets the sub font used in the elements' text
     def get_sub_font(self):
         return self.sub_font
 
-
+# Runs the application through the main method
 if __name__ == '__main__':
     main()

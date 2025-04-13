@@ -1,10 +1,17 @@
+"""
+UserWindow.py
+
+This is the window where all functions of the program are compiled. The functions
+may differ based on the type of user logged in the system
+"""
+
 import customtkinter as ctk
 from PIL import Image
 from FilePathing import resource_path
 
-
+# This is the frame that holds all the functions of the system available to the user
 class UserFrame(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent): # Initializes class with elements
         super().__init__(parent)
         self.parent = parent
         self.configure(fg_color="#fdc30d")
@@ -41,29 +48,37 @@ class UserFrame(ctk.CTkFrame):
         self.grid_columnconfigure(0, weight= 1)
         self.grid_columnconfigure(1, weight= 1)
 
+    # Return to the main screen
     def on_return_button_clicked(self):
         self.parent.show_frame("MainFrame")
 
+    # Goes to the kitchen window
     def on_kitchen_button_clicked(self):
         self.parent.show_frame("MainKitchenFrame")
 
+    # Goes to the inventory window
     def on_inventory_button_clicked(self):
         self.parent.show_frame("MainInventoryFrame")
 
+    # Goes to the order window
     def on_order_button_clicked(self):
         self.parent.show_frame("OrderFrame")
 
+    # Goes to the edit sku window
     def on_edit_sku_button_clicked(self):
         self.parent.show_frame("EditSKUFrame")
 
+    # Goes to the report window
     def on_report_button_clicked(self):
         self.parent.show_frame("ReportFrame")
 
+    # Sets the user label
     def set_user_label(self):
         user = self.parent.get_user()
         print(user)
         self.user_label.configure(text = "Welcome " + user + "!", font = self.parent.get_main_font(), text_color="#1a1a1a")
 
+    # Shows the edit sku button depending on the type of user logged in
     def show_edit_sku(self):
         if self.parent.get_user_admin():
             print(self.parent.get_user_admin())
