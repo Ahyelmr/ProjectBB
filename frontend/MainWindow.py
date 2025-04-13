@@ -1,10 +1,16 @@
+"""
+MainWindow.py
+
+This is the main frame used in the main application CTk object when running the program.
+"""
+
 from PIL import Image
 import customtkinter as ctk
-
 from FilePathing import resource_path
 
+# This is the first CTkFrame object that appears when starting the application
 class MainFrame(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent): # Initializes class with elements
         super().__init__(parent)
 
         self.parent = parent
@@ -28,13 +34,14 @@ class MainFrame(ctk.CTkFrame):
         self.LoginButton = ctk.CTkButton(self.button_frame, text="Login", command=lambda: self.on_login_click(), font = self.parent.get_main_font())
         self.LoginButton.pack(side = "left", anchor="center", padx = 10, pady = 10)
 
+    # Sets up the credentials window to register a new user
     def on_signup_click(self):
         print("Sign Up button clicked")  # Debugging
         self.parent.set_login(False)  # Set login state for registration
         print(f"Login state after signup: {self.parent.get_login()}")  # Debugging
         self.parent.show_frame("CredentialsFrame")
 
-
+    # Sets up the credentials window to log in an existing user
     def on_login_click(self):
         print("Login button clicked")  # Debugging
         self.parent.set_login(True)  # Set login state for login

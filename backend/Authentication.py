@@ -1,8 +1,14 @@
-import os
+"""
+Authentication.py
 
+This file is responsible for checking files and contains the logic for
+registering and logging in users
+"""
+
+import os
 from FilePathing import resource_path
 
-
+# This function registers a new user (if there is no existing user with the same credentials)
 def register_user(user_name, user_pass):
     if os.path.exists(resource_path("Information/users.txt")):
         with open(resource_path("Information/users.txt"), "r") as file:
@@ -20,6 +26,7 @@ def register_user(user_name, user_pass):
     print("Registration successful!")
     return True
 
+# This function checks if the credentials inputted matches that of an existing user
 def user_login(user_name, user_pass):
     if not os.path.exists(resource_path("Information/users.txt")):
         print("No registered users found. Please register first.")
@@ -37,6 +44,7 @@ def user_login(user_name, user_pass):
     print("Invalid username or password.")
     return False
 
+# This function checks if the user logging in has admin access or not
 def check_admin(user_name, user_pass):
     if  os.path.exists(resource_path("Information/users.txt")):
         with open(resource_path("Information/users.txt"), "r") as file:

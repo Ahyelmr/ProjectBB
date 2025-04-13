@@ -1,17 +1,23 @@
+"""
+EditSKUWindow.py
+
+This file is responsible for reading and writing to files so that adding and
+deleting of SKUs in the current SKU list of the system is possible
+"""
+
 import os
 import shutil
-
 import customtkinter as ctk
 from tkinter import filedialog
 from PIL import Image
-
 from FilePathing import resource_path, get_app_dir
 from backend.Item import SkuItem
 from backend.LoadItems import add_to_file, delete_from_file
+from frontend.CredentialsWindow import open_confirmation_window
 
-
+# This is the main frame that contains all of its sub frames and functions
 class EditSKUFrame(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent): # Initializes class with elements
         super().__init__(parent)
         self.parent = parent
         self.configure(fg_color="#fdc30d")
@@ -24,14 +30,17 @@ class EditSKUFrame(ctk.CTkFrame):
         self.edit_frame.grid(row=0, column=1, sticky="nsew")
         self.options_frame.grid(row=0, column=0, sticky="nsew")
 
+    # Shows the frame where the item is shown
     def show_edit_item_frame(self):
         self.edit_frame.show_add_item_frame()
 
+    # Edits the label text accordingly
     def edit_item_frame_label(self, text):
         self.edit_frame.set_item_frame_label(text)
 
+# This is the options frame to choose whether to add, delete, or search a specific SKU item
 class EditOptionsFrame(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent): # Initializes class with elements
         super().__init__(parent)
         self.parent = parent
         self.configure(fg_color="#fdc30d")
@@ -61,32 +70,37 @@ class EditOptionsFrame(ctk.CTkFrame):
                                            font = self.parent.parent.get_main_font())
         self.return_button.pack(side="top", fill="x", pady=10)
 
+    # Shows the options to add an SKU item
     def on_add_button_clicked(self):
         self.parent.show_edit_item_frame()
         self.configure_search_label(True)
         self.parent.edit_item_frame_label("Add SKU Item")
 
+    # Deletes the SKU that is shown on the window from the search SKU function
     def on_delete_button_clicked(self):
         self.parent.edit_item_frame_label("Delete SKU Item")
         item_name = self.search_entry.get()
         print("Item name", item_name)
         self.parent.parent.get_sku().remove_item(item_name)
         delete_from_file(resource_path("Information/SKU.txt"), str(item_name))
+        open_confirmation_window("Deleted " + item_name + "!", self.parent.parent.get_main_font())
 
+    # Searches a specific SKU from the SKU list based on the name given
     def on_search_button_clicked(self):
         item_name = self.search_entry.get()
         item = self.parent.parent.get_sku().get_item(item_name)
         self.parent.edit_frame.set_item_frame(item)
 
+    # Notifies the user if a certain SKU name searched is not found in the list
     def configure_search_label(self, found):
         if not found:
             self.search_label.configure(text="Item not found", font = self.parent.parent.get_main_font())
         else:
             self.search_label.forget()
 
-
+# This is the frame that contains the item that is either searched/added/deleted
 class EditItemFrame(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent): # Initializes class with elements
         super().__init__(parent)
         self.parent = parent
         self.configure(fg_color="#fdc30d")
@@ -122,9 +136,11 @@ class EditItemFrame(ctk.CTkFrame):
         self.add_item_button = ctk.CTkButton(self, text = "Confirm Add SKU Item", command=lambda:self.on_add_SKU_button_clicked(),
                                              font = self.parent.parent.get_main_font())
 
+    # Sets the specific item attributes on the frame
     def set_item_frame_label(self, text):
         self.item_frame_label.configure(text = text, font = self.parent.parent.get_main_font())
 
+    # Adds the SKu item on the frame to the SKU list in the system
     def on_add_SKU_button_clicked(self):
         name = self.item_name_entry.get()
         SKU = self.item_SKU_entry.get()
@@ -138,6 +154,9 @@ class EditItemFrame(ctk.CTkFrame):
         item_line_name = name + "," + SKU + "," + price + "," + image + "," + category
         add_to_file(resource_path("Information/SKU.txt"), item_line_name)
 
+        open_confirmation_window("Added " + name + "!", self.parent.parent.get_main_font())
+
+    # Adds an image connected to a new SKU item
     def on_add_image_button_clicked(self):
         file_path = filedialog.askopenfilename(
             filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.gif;*.bmp")]
@@ -157,6 +176,7 @@ class EditItemFrame(ctk.CTkFrame):
             shutil.copy(file_path, save_path)
             print(f"Image saved to: {save_path}")
 
+    # Sets the labels of the frame to the attributes of the item
     def set_item_frame(self, item):
         if item is not None:
             item_image = Image.open(resource_path("Assets/SKU-Inv/" + item.get_image()))
@@ -171,6 +191,7 @@ class EditItemFrame(ctk.CTkFrame):
         else:
             self.parent.options_frame.configure_search_label(False)
 
+    # Shows the default labels when adding a new frame
     def show_add_item_frame(self):
         self.item_image.configure(image=None)
         self.item_name_label.configure(text="Name", font = self.parent.parent.get_main_font())
@@ -180,9 +201,11 @@ class EditItemFrame(ctk.CTkFrame):
         self.item_image_button.pack(side="top", fill="x", pady=10)
         self.add_item_button.pack(side="top", fill="x", pady=10)
 
+    # Gets the name of the image file in the frame
     def get_image_name(self):
         return self.image_name
 
+    # Sets the name of the image file in the frame
     def set_image_name(self, name):
         self.image_name = name
 

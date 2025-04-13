@@ -1,10 +1,17 @@
-import os
+"""
+LoadItems.py
 
+This file is responsible for file handling in the system
+It adds/deletes/reads from different files connected in the system
+"""
+
+import os
 from FilePathing import resource_path
 from backend.Inventory import Inventory
 from backend.Item import SkuItem, InventoryItem
 from backend.Sku import Sku
 
+# This function exports the details of the SKU list
 def export_sku(filename):
     skuList = Sku()
     if os.path.exists(filename):
@@ -18,6 +25,7 @@ def export_sku(filename):
 
             return skuList
 
+# This function exports the details of the inventory list
 def export_inventory(filename):
     inventory = Inventory()
     if os.path.exists(filename):
@@ -30,11 +38,13 @@ def export_inventory(filename):
 
             return inventory
 
+# This function creates a file that does not exist yet
 def create_file(filename, value):
     if not os.path.exists(filename):
         with open(filename, "w") as f:
             f.write(value)
 
+# This function adds a line to an existing file
 def add_to_file(filename, value):
     if not os.path.exists(filename):
         with open(filename, "w") as f:
@@ -53,6 +63,7 @@ def add_to_file(filename, value):
                 with open(filename, "a") as f_append:
                     f_append.write(value)
 
+# This function deletes a specific line from a file
 def delete_from_file(filename, value):
     if not os.path.exists(filename):
         with open(filename, "w") as f:
@@ -66,7 +77,7 @@ def delete_from_file(filename, value):
                 if item.strip() and not item.startswith(value):
                     f.write(item)
 
-
+# This file compiles the reports from orders completed
 def get_report(filename):
     report = []
     if os.path.exists(filename):
