@@ -1,4 +1,5 @@
 # ProjectBB
+![BigBoyzLogo](https://github.com/user-attachments/assets/e60054cd-0a51-414b-9747-8c795fe432d8)
 LBYCPD2 Final Project
 In collaboration with Big Boyz Diner
 
